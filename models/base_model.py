@@ -13,7 +13,7 @@ class BaseModel():
         return f"[{self.__class__.__name__}] ({self.id}) {self.to_dict()}"
 
     def save(self):
-        updated_at = datetime.datetime.now()
+        self.updated_at = datetime.datetime.now()
 
     def to_dict(self):
         diction = dict(self.__dict__)
