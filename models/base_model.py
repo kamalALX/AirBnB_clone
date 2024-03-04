@@ -19,5 +19,6 @@ class BaseModel():
         diction = dict(self.__dict__)
         diction["__class__"] = self.__class__.__name__
         diction["created_at"] = self.created_at.isoformat()
+        diction["updated_at"] = self.updated_at.isoformat()
         return diction
     
