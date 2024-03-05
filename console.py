@@ -9,11 +9,14 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, line):
         'create BaseModel'
-        if line in ["User", "City", "Amenity",
-                    "Place", "BaseModel", "State", "Review"]:
+        try:
             create_instance = eval(line)()
             create_instance.save()
             print(create_instance.id)
+        except SyntaxError:
+            print("** class name missing **")
+        except NameError:
+            print("** class doesn't exist **")
 
     def do_EOF(self, line):
         'Quit program if EOF entered'
