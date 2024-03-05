@@ -7,15 +7,13 @@ from models.base_model import BaseModel
 class HBNBCommand(cmd.Cmd):
     prompt = "(hbnb) "
 
-    def do_create(self, *args):
+    def do_create(self, line):
         'create BaseModel'
-        if len(args) == 1:
-            print(args[0])
-            create_instance = eval(args[0])
-            print("_______________________-")
-            print(type(create_instance))
-            print(create_instance.id)
+        if line in ["User", "City", "Amenity",
+                    "Place", "BaseModel", "State", "Review"]:
+            create_instance = eval(line)()
             create_instance.save()
+            print(create_instance.id)
 
     def do_EOF(self, line):
         'Quit program if EOF entered'
