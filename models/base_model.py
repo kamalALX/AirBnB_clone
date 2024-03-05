@@ -33,5 +33,4 @@ class BaseModel():
         diction["created_at"] = self.created_at.isoformat()
         diction["updated_at"] = self.updated_at.isoformat()
 
-        return diction
-    
+        return diction 

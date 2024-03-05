@@ -14,8 +14,7 @@ class FileStorage():
         return FileStorage.__objects
 
     def new(self, obj):
-        """
-        """
+        """ """
         if obj:
             key = "{}.{}".format(type(obj).__name__, obj.id)
             self.__objects[key] = obj.to_dict()
@@ -30,4 +29,3 @@ class FileStorage():
                 FileStorage.__objects = json.load(fileJSON)
         except FileNotFoundError:
             pass
-
