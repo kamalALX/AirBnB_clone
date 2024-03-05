@@ -17,14 +17,19 @@ class FileStorage():
         """
         self.__objects[self.__class__.__name__.self.id] = obj
         """
-        key = "{}.{}".format(type(obj).__name__, obj.id)
-        self.__objects[key] = obj
+        if obj:
+            key = "{}.{}".format(type(obj).__name__, obj.id)
+            self.__objects[key] = obj
 
     def save(self):
+        objectsJSON = {}
         for id, obj in FileStorage.__objects.items():
-            FileStorage.__objects[id] = obj.to_dict()
-        with open(FileStorage.__file_path, "a") as fileJSON:
-            json.dump(FileStorage.__objects, fileJSON)
+            if not isinstance(obj, dict):
+                objectsJSON[id] = obj.to_dict()
+            else:
+                objectsJSON[id] = obj
+        with open(FileStorage.__file_path, "w") as fileJSON:
+            json.dump(objectsJSON, fileJSON)
 
     def reload(self):
         try:
