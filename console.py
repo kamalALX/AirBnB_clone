@@ -19,8 +19,21 @@ class HBNBCommand(cmd.Cmd):
         except NameError:
             print("** class doesn't exist **")
 
-    def do_show(self):
-        pass
+    def do_show(self, line):
+        'show BaseModel'
+        arg = line.split()
+        try:
+            key = ("{}.{}".format(arg[0], arg[1]))
+            loaded_objects = models.storage.all()
+            loaded_instance = loaded_objects[key]
+            print(loaded_instance)
+        except IndexError:
+            if len(arg) == 0:
+                print("** class name missing **")
+            elif len(arg) == 1:
+                print("** instance id missing **")
+        except KeyError:
+            print("** class doesn't exist **")
 
     def do_destroy(self, line):
         
