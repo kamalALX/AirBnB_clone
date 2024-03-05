@@ -29,7 +29,7 @@ class FileStorage():
             else:
                 objectsJSON[id] = obj
         with open(FileStorage.__file_path, "w") as fileJSON:
-            json.dump(objectsJSON, fileJSON)
+            json.dump(objectsJSON, fileJSON, indent=4)
 
     def reload(self):
         try:
