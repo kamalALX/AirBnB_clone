@@ -11,17 +11,18 @@ class FileStorage():
         pass
 
     def all(self):
-        return self.__objects
+        return FileStorage.__objects
 
     def new(self, obj):
         """
         self.__objects[self.__class__.__name__.self.id] = obj
         """
-        """self.__objects[__class__.__name__.id] = obj"""
-        key = obj.__class__.__name__.id
-        FileStorage.__objects[key] = obj
+        key = "{}.{}".format(type(obj).__name__, obj.id)
+        self.__objects[key] = obj
 
     def save(self):
+        for id, obj in FileStorage.__objects.items():
+            FileStorage.__objects[id] = obj.to_dict()
         with open(FileStorage.__file_path, "a") as fileJSON:
             json.dump(FileStorage.__objects, fileJSON)
 

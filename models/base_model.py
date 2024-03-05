@@ -15,17 +15,17 @@ class BaseModel():
                     else:
                         setattr(self, key, value)
         else:
-            storage.new(self)
             self.id = str(uuid.uuid4())
             self.created_at = datetime.datetime.now()
             self.updated_at = datetime.datetime.now()
+            storage.new(self)
 
     def __str__(self):
         return "[{}] ({}) {}".format(self.__class__.__name__, self.id, self.__dict__)
 
     def save(self):
         self.updated_at = datetime.datetime.now()
-        storage.save(self)
+        storage.save()
 
     def to_dict(self):
         diction = dict(self.__dict__)
