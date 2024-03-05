@@ -18,11 +18,23 @@ class HBNBCommand(cmd.Cmd):
         except NameError:
             print("** class doesn't exist **")
 
+    def do_show(self):
+        pass
+
+    def do_destroy(self):
+        pass
+
+    def do_all(self):
+        pass
+
+    def do_update(self):
+        pass
+
     def do_EOF(self, line):
         'Quit program if EOF entered'
         return True
 
-    def do_quit(self, arg):
+    def do_quit(self, line):
         'Quit command to exit the program'
         return True
 
