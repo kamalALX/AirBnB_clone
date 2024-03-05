@@ -2,6 +2,7 @@
 """ """
 import cmd
 from models.base_model import BaseModel
+import models
 
 
 class HBNBCommand(cmd.Cmd):
@@ -21,8 +22,23 @@ class HBNBCommand(cmd.Cmd):
     def do_show(self):
         pass
 
-    def do_destroy(self):
-        pass
+    def do_destroy(self, line):
+        
+        arg = line.split()
+        length = len(arg)
+
+        if length == 0:
+            print("** class name missing **")
+        elif arg[0] not in ['BaseModel']:
+            print("** class doesn't exist **")
+        else:
+            key = ("{}.{}".format(arg[0], arg[1]))
+            objs = models.storage.all()
+            try:
+                del objs[key]
+            except KeyError:
+                print("** no instance found **")
+            models.storage.save()
 
     def do_all(self):
         pass
