@@ -17,7 +17,7 @@ class BaseModel():
         else:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.datetime.now()
-            self.updated_at = datetime.datetime.now()
+            self.updated_at = self.created_at
             storage.new(self)
 
     def __str__(self):
@@ -33,4 +33,4 @@ class BaseModel():
         diction["created_at"] = self.created_at.isoformat()
         diction["updated_at"] = self.updated_at.isoformat()
 
-        return diction 
+        return diction
