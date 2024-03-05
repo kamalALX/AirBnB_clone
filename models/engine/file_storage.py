@@ -30,4 +30,3 @@ class FileStorage():
                 FileStorage.__objects = json.load(fileJSON)
         except FileNotFoundError:
             pass
-
