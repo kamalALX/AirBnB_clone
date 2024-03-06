@@ -37,12 +37,10 @@ class FileStorage():
             new__objects = {}
             with open(FileStorage.__file_path, "r") as fileJSON:
                 new__objects = json.load(fileJSON)
-                for key, value in new__objects.items():
-                    class_name = value["__class__"]
+                for obj in new__objects.values():
+                    class_name = obj["__class__"]
                     if class_name in class_mapping:
-                        real_class = class_mapping[class_name]
-                        obj = real_class(**value)
-                        FileStorage.__objects[key] = obj
+                        self.new(class_mapping[class_name](**obj))
         except FileNotFoundError:
             pass
 
