@@ -1,7 +1,14 @@
 #!/usr/bin/python3
 """ """
 import json
+from models.base_model import BaseModel
+from models.user import User
 
+
+class_mapping = {
+    "BaseModel": BaseModel,
+    "User": User,
+}
 
 class FileStorage():
     __file_path = "file.json"
@@ -14,23 +21,9 @@ class FileStorage():
         return FileStorage.__objects
 
     def new(self, obj):
-        """
-        """
         if obj:
             key = "{}.{}".format(type(obj).__name__, obj.id)
             self.__objects[key] = obj
-    """
-    def save(self):
-        with open(FileStorage.__file_path, "w") as fileJSON:
-            json.dump(FileStorage.__objects, fileJSON, indent=4)
-
-    def reload(self):
-        try:
-            with open(FileStorage.__file_path, "r") as fileJSON:
-                FileStorage.__objects = json.load(fileJSON)
-        except FileNotFoundError:
-            pass
-    """
 
     def save(self):
         formatted_dictionary = {}
@@ -41,9 +34,15 @@ class FileStorage():
 
     def reload(self):
         try:
+            new__objects = {}
             with open(FileStorage.__file_path, "r") as fileJSON:
-                temp_dict = json.load(fileJSON)
-                for key, value in temp_dict.items():
-                    FileStorage.__objects[key] = eval(value["__class__"])(**value)
+                new__objects = json.load(fileJSON)
+                for key, value in new__objects.items():
+                    class_name = value["__class__"]
+                    if class_name in class_mapping:
+                        real_class = class_mapping[class_name]
+                        obj = real_class(**value)
+                        FileStorage.__objects[key] = obj
         except FileNotFoundError:
             pass
+

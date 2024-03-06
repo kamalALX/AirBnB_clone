@@ -6,7 +6,7 @@ import models
 
 class BaseModel():
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *_, **kwargs):
         if kwargs:
             for key, value in kwargs.items():
                 if key != "__class__":
@@ -25,6 +25,7 @@ class BaseModel():
 
     def save(self):
         self.updated_at = datetime.datetime.now()
+        self.__dict__.update({'updated_at': datetime.datetime.now()})
         models.storage.save()
 
     def to_dict(self):
