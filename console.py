@@ -51,7 +51,7 @@ class HBNBCommand(cmd.Cmd):
 
         if length == 0:
             print("** class name missing **")
-        elif arg[0] not in ['BaseModel']:
+        elif arg[0] not in ['BaseModel', 'User']:
             print("** class doesn't exist **")
         else:
             key = ("{}.{}".format(arg[0], arg[1]))
@@ -69,7 +69,7 @@ class HBNBCommand(cmd.Cmd):
         for value in dictio.values():
             lista_all.append(str(value))
         if line:
-            if line in ["BaseModel", "User"]:
+            if line in class_mapping:
                 for item in lista_all:
                     if line in item:
                         lista_class.append(item)
@@ -79,8 +79,37 @@ class HBNBCommand(cmd.Cmd):
         else:
             print(lista_all)
 
-    def do_update(self):
-        pass
+    def do_update(self, line):
+        comand = line.split()
+        ln = len(comand)
+
+        try:
+            cls_found, id_found = 0, 0
+            for key, value in (models.storage.all()).items():
+                new_key = key.split(".")
+                if comand[0] == new_key[0]:
+                    cls_found = 1
+                    if comand[1] == new_key[1]:
+                        id_found = 1
+                        setattr(value, comand[2], str(comand[3][1:-1]))
+                        models.storage.save()
+                        return False
+            if cls_found == 0:
+                print("** class doesn't exist **")
+                return False
+            elif id_found == 0:
+                print("** no instance found **")
+        except IndexError:
+            if ln == 0:
+                print("** class name missing **")
+            elif ln >= 1 and comand[0] not in class_mapping: #check with youssef if correct
+                print("** class doesn't exist **")
+            elif ln == 1 and comand[0] in class_mapping:
+                print("** instance id missing **")
+            elif ln == 2:
+                print("** attribute name missing **")
+            elif ln == 3:
+                print("** value missing **")
 
     def do_EOF(self, line):
         'Quit program if EOF entered'
