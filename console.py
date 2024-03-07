@@ -1,7 +1,8 @@
 #!/usr/bin/python3
 """ """
+import re
 import cmd
-import uuid
+import json
 import models
 from models.base_model import BaseModel
 from models.user import User
@@ -91,6 +92,26 @@ class HBNBCommand(cmd.Cmd):
         else:
             print(lista_all)
 
+    def do_count(self, line):
+        'all Model'
+        dictio = models.storage.all()
+        lista_all = []
+        lista_class = []
+        count_ = 0
+        for value in dictio.values():
+            lista_all.append(str(value))
+        if line:
+            if line in class_mapping:
+                for item in lista_all:
+                    if line in item:
+                        lista_class.append(item)
+                        count_ += 1
+                print(count_)
+            else:
+                print("** class doesn't exist **")
+        else:
+            print(lista_all)
+
     def do_update(self, line):
         'update Model id attribute value'
         comand = line.split()
@@ -125,6 +146,43 @@ class HBNBCommand(cmd.Cmd):
                 print("** attribute name missing **")
             elif ln == 3:
                 print("** value missing **")
+
+    def default(self, line):
+        'default command'
+        try:
+            list = line[0:-1].split('(')
+            try:
+                list.remove('')
+            except ValueError:
+                pass
+            left_list = list[0].split('.')
+            function_ = left_list[1]
+            class_ = left_list[0]
+            if len(list) == 1:
+                if function_ == "all":
+                    self.do_all(class_)
+                if function_ == "count":
+                    self.do_count(class_)
+            else:
+                right_list = list[1].split(',', 1)
+                uuid_ = right_list[0].strip('"')
+                if function_ == "show":
+                    self.do_show(class_ + " " + uuid_)
+                if function_ == "destroy":
+                    self.do_destroy(class_ + " " + uuid_)
+
+                if function_ == "update":
+                    jsondata_ = right_list[1].replace("'", '"')
+                    try:
+                        argument_dict = json.loads(jsondata_)
+                        for key_, value_ in argument_dict.items():
+                            self.do_update(class_ + " " + uuid_ + " " + key_ + " " + str(value_))
+                    except json.decoder.JSONDecodeError:
+                        update_list = [elem.strip('" ') for elem in jsondata_.split(',')]
+                        self.do_update(class_ + " " + uuid_ + " " + update_list[0] + " " + update_list[1])
+        except IndexError:
+            pass
+
 
     def do_EOF(self, line):
         'Quit program if EOF entered'
