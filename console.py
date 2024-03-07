@@ -1,37 +1,43 @@
 #!/usr/bin/python3
 """ """
 import cmd
+import uuid
+import models
 from models.base_model import BaseModel
 from models.user import User
-import models
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
 from models.place import Place
+from models.review import Review
 
 
 class_mapping = {
     "BaseModel": BaseModel,
     "User": User,
+    "State": State,
+    "City": City,
+    "Amenity": Amenity,
     "Place": Place,
+    "Review": Review,
 }
 
 class HBNBCommand(cmd.Cmd):
     prompt = "(hbnb) "
 
     def do_create(self, line):
-        'create BaseModel'
-        if line in class_mapping:
-            try:
-                create_instance = class_mapping[line]()
-                create_instance.save()
-                print(create_instance.id)
-            except SyntaxError:
-                print("** class name missing **")
-            except NameError:
-                print("** class doesn't exist **")
-        else:
-            pass
+        'create Model'
+        try:
+            create_instance = class_mapping[line]()
+            create_instance.save()
+            print(create_instance.id)
+        except SyntaxError:
+            print("** class name missing **")
+        except (NameError, KeyError):
+            print("** class doesn't exist **")
 
     def do_show(self, line):
-        'show BaseModel'
+        'show Model id'
         arg = line.split()
         try:
             key = ("{}.{}".format(arg[0], arg[1]))
@@ -42,12 +48,15 @@ class HBNBCommand(cmd.Cmd):
             if len(arg) == 0:
                 print("** class name missing **")
             elif len(arg) == 1:
-                print("** instance id missing **")
+                if arg[0] in class_mapping:
+                    print("** instance id missing **")
+                else:
+                    print("** class name missing **")
         except KeyError:
             print("** class doesn't exist **")
 
     def do_destroy(self, line):
-        
+        'destroy Model id'
         arg = line.split()
         length = len(arg)
 
@@ -65,6 +74,7 @@ class HBNBCommand(cmd.Cmd):
             models.storage.save()
 
     def do_all(self, line):
+        'all Model'
         dictio = models.storage.all()
         lista_all = []
         lista_class = []
@@ -82,6 +92,7 @@ class HBNBCommand(cmd.Cmd):
             print(lista_all)
 
     def do_update(self, line):
+        'update Model id attribute value'
         comand = line.split()
         ln = len(comand)
 
