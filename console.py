@@ -112,8 +112,10 @@ class HBNBCommand(cmd.Cmd):
         lista_class = []
         count_ = 0
         for value in dictio.values():
+            count_ += 1
             lista_all.append(str(value))
         if line:
+            count_ = 0
             if line in class_mapping:
                 for item in lista_all:
                     if line in item:
@@ -123,7 +125,7 @@ class HBNBCommand(cmd.Cmd):
             else:
                 print("** class doesn't exist **")
         else:
-            print(lista_all)
+            print(count_)
 
     def do_update(self, line):
         'update Model id attribute value'
