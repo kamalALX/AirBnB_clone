@@ -126,7 +126,6 @@ class HBNBCommand(cmd.Cmd):
                     if comand[1] == new_key[1]:
                         id_found = 1
                         typ = (type(getattr(value, comand[2])))
-                        print(typ)
                         setattr(value, comand[2], typ((comand[3][1:-1])))
                         models.storage.save()
                         return False
@@ -176,10 +175,10 @@ class HBNBCommand(cmd.Cmd):
                     try:
                         argument_dict = json.loads(jsondata_)
                         for key_, value_ in argument_dict.items():
-                            self.do_update(class_ + " " + uuid_ + " " + key_ + " " + str(value_))
+                            self.do_update(class_ + " " + uuid_ + " " + key_ + " " + '"' + str(value_) + '"')
                     except json.decoder.JSONDecodeError:
                         update_list = [elem.strip('" ') for elem in jsondata_.split(',')]
-                        self.do_update(class_ + " " + uuid_ + " " + update_list[0] + " " + update_list[1])
+                        self.do_update(class_ + " " + uuid_ + " " + update_list[0] + " " + '"' + update_list[1] + '"')
         except IndexError:
             pass
 
