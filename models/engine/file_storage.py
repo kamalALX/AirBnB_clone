@@ -3,11 +3,13 @@
 import json
 from models.base_model import BaseModel
 from models.user import User
+from models.place import Place
 
 
 class_mapping = {
     "BaseModel": BaseModel,
     "User": User,
+    "Place": Place,
 }
 
 class FileStorage():

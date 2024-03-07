@@ -4,11 +4,13 @@ import cmd
 from models.base_model import BaseModel
 from models.user import User
 import models
+from models.place import Place
 
 
 class_mapping = {
     "BaseModel": BaseModel,
     "User": User,
+    "Place": Place,
 }
 
 class HBNBCommand(cmd.Cmd):
@@ -51,7 +53,7 @@ class HBNBCommand(cmd.Cmd):
 
         if length == 0:
             print("** class name missing **")
-        elif arg[0] not in ['BaseModel', 'User']:
+        elif arg[0] not in class_mapping:
             print("** class doesn't exist **")
         else:
             key = ("{}.{}".format(arg[0], arg[1]))
@@ -91,7 +93,9 @@ class HBNBCommand(cmd.Cmd):
                     cls_found = 1
                     if comand[1] == new_key[1]:
                         id_found = 1
-                        setattr(value, comand[2], str(comand[3][1:-1]))
+                        typ = (type(getattr(value, comand[2])))
+                        print(typ)
+                        setattr(value, comand[2], typ((comand[3][1:-1])))
                         models.storage.save()
                         return False
             if cls_found == 0:
