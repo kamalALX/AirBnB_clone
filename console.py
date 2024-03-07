@@ -23,6 +23,21 @@ class_mapping = {
     "Review": Review,
 }
 
+
+def check_comand(comand):
+    if comand[0:1] == '"' and comand[-1:-2] == '"':
+        comand = comand[1:-1]
+    try:
+        comand = int(comand)
+        return comand
+    except ValueError:
+        try:
+            comand = float(comand)
+            return comand
+        except ValueError:
+            return comand
+
+
 class HBNBCommand(cmd.Cmd):
     prompt = "(hbnb) "
 
@@ -125,7 +140,7 @@ class HBNBCommand(cmd.Cmd):
                     cls_found = 1
                     if comand[1] == new_key[1]:
                         id_found = 1
-                        try:
+                        """try:
                             if comand[3][0:1] == '"' and comand[3][-1:-2] == '"':
                                 comand[3] = comand[3][1:-1]
                             typ = (type(getattr(value, comand[2])))
@@ -135,7 +150,11 @@ class HBNBCommand(cmd.Cmd):
                                 comand[3] = comand[3][1:-1]
                             else:
                                 typ = int
-                            setattr(value, comand[2], typ(comand[3]))
+                            setattr(value, comand[2], typ(comand[3]))"""
+                        comand[3] = check_comand(comand[3])
+                        print(comand[3])  # delete this
+                        print(type(comand[3]))
+                        setattr(value, comand[2], comand[3])
                         models.storage.save()
                         return False
             if cls_found == 0:
@@ -146,7 +165,7 @@ class HBNBCommand(cmd.Cmd):
         except IndexError:
             if ln == 0:
                 print("** class name missing **")
-            elif ln >= 1 and comand[0] not in class_mapping: #check with youssef if correct
+            elif ln >= 1 and comand[0] not in class_mapping:
                 print("** class doesn't exist **")
             elif ln == 1 and comand[0] in class_mapping:
                 print("** instance id missing **")
@@ -191,7 +210,6 @@ class HBNBCommand(cmd.Cmd):
         except IndexError:
             pass
 
-
     def do_EOF(self, line):
         'Quit program if EOF entered'
         return True
@@ -203,6 +221,7 @@ class HBNBCommand(cmd.Cmd):
     def emptyline(self):
         'an empty line + ENTER shouldn’t execute anything'
         return False
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
