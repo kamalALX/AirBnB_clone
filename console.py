@@ -23,19 +23,6 @@ class_mapping = {
 }
 
 
-def check_comand(comand):
-    """check input type"""
-    try:
-        comand = int(comand)
-        return comand
-    except ValueError:
-        try:
-            comand = float(comand)
-            return comand
-        except ValueError:
-            return comand[1:-1]
-
-
 class HBNBCommand(cmd.Cmd):
     """using python command line Cmd"""
     prompt = "(hbnb) "
@@ -130,7 +117,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_update(self, line):
         """update Model id attribute value"""
-        comand = line.split()
+        comand = line.split(maxsplit=3)
         ln = len(comand)
         try:
             cls_found, id_found = 0, 0
@@ -140,7 +127,7 @@ class HBNBCommand(cmd.Cmd):
                     cls_found = 1
                     if comand[1] == new_key[1]:
                         id_found = 1
-                        comand[3] = check_comand(comand[3])
+                        comand[3] = json.loads(comand[3])
                         setattr(value, comand[2], comand[3])
                         models.storage.save()
                         return
