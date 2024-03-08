@@ -5,16 +5,21 @@ Tests for BaseModel
 import unittest
 from models.base_model import BaseModel
 
+
 class TestBaseModel(unittest.TestCase):
     """
     Tests for BaseModel
     """
+
     def setUp(self):
         """
         Test setUp
         """
         self.new_model = BaseModel()
-        self.name = "Dennis McField"
+        self.new_model.name = "Dennis McField"
+
+    def test_name(self):
+        self.assertEqual(self.new_model.name, "Dennis McField")
 
     def test_obj(self):
         bmObj = BaseModel()
@@ -39,6 +44,7 @@ class TestBaseModel(unittest.TestCase):
         """
         Test to_dict
         """
+
 
 if __name__ == '__main__':
     unittest.main()
