@@ -25,8 +25,6 @@ class_mapping = {
 
 
 def check_comand(comand):
-    if comand[0:1] == '"' and comand[-1:-2] == '"':
-        comand = comand[1:-1]
     try:
         comand = int(comand)
         return comand
@@ -35,7 +33,7 @@ def check_comand(comand):
             comand = float(comand)
             return comand
         except ValueError:
-            return comand
+            return comand[1:-1]
 
 
 class HBNBCommand(cmd.Cmd):
