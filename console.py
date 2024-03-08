@@ -24,6 +24,7 @@ class_mapping = {
 
 
 def check_comand(comand):
+    """check input type"""
     try:
         comand = int(comand)
         return comand
@@ -36,6 +37,7 @@ def check_comand(comand):
 
 
 class HBNBCommand(cmd.Cmd):
+    """using python command line Cmd"""
     prompt = "(hbnb) "
 
     def do_create(self, line):
@@ -189,12 +191,15 @@ class HBNBCommand(cmd.Cmd):
                         argument_dict = json.loads(jsondata_)
                         for key_, value_ in argument_dict.items():
                             if not isinstance(value_, str):
-                                self.do_update(f"{class_} {uuid_} {key_} {str(value_)}")
+                                json_ = f"{class_} {uuid_} {key_} {str(value_)}"
+                                self.do_update(json_)
                             else:
-                                self.do_update(f"{class_} {uuid_} {key_} \"{value_}\"")
+                                json2_ = f"{class_} {uuid_} {key_} \"{value_}\""
+                                self.do_update(json2_)
                     except json.decoder.JSONDecodeError:
-                        update_list = [elem.strip(' ') for elem in jsondata_.split(',')]
-                        update_list[0] = update_list[0].strip('"')
+                        update_list = jsondata_.split(',')
+                        update_list[1] = update_list[1].strip(' ')
+                        update_list[0] = update_list[0].strip(' "')
                         str_ = f"{class_} {uuid_}"
                         str2_ = f"{update_list[0]} {update_list[1]}"
                         str3_ = f"{str_} {str2_}"
