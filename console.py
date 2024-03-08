@@ -207,11 +207,11 @@ class HBNBCommand(cmd.Cmd):
         except IndexError:
             pass
 
-    def do_EOF(self, line):
+    def do_EOF(self, _):
         """Quit program if EOF entered"""
         return True
 
-    def do_quit(self, line):
+    def do_quit(self, _):
         """Quit command to exit the program"""
         return True
 
