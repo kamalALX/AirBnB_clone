@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 """ """
-import re
 import cmd
 import json
 import models
@@ -204,14 +203,21 @@ class HBNBCommand(cmd.Cmd):
                         argument_dict = json.loads(jsondata_)
                         for key_, value_ in argument_dict.items():
                             if not isinstance(value_, str):
-                                print(class_ + " " + uuid_ + " " + key_ + " " + str(value_))
+                                """
                                 self.do_update(class_ + " " + uuid_ + " " + key_ + " " + str(value_))
+                                """
+                                self.do_update(f"{class_} {uuid_} {key_} {str(value_)}")
                             else:
-                                print(class_ + " " + uuid_ + " " + key_ + " " + '"' + value_ + '"')
+                                """
                                 self.do_update(class_ + " " + uuid_ + " " + key_ + " " + '"' + value_ + '"')
+                                """
+                                self.do_update(f"{class_} {uuid_} {key_} \"{value_}\"")
                     except json.decoder.JSONDecodeError:
                         update_list = [elem.strip('" ') for elem in jsondata_.split(',')]
+                        """
                         self.do_update(class_ + " " + uuid_ + " " + update_list[0] + " " + update_list[1])
+                        """
+                        self.do_update(f"{class_} {uuid_} {update_list[0]} {update_list[1]}")
         except IndexError:
             pass
 
