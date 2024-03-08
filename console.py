@@ -191,11 +191,11 @@ class HBNBCommand(cmd.Cmd):
                         argument_dict = json.loads(jsondata_)
                         for key_, value_ in argument_dict.items():
                             if not isinstance(value_, str):
-                                json_ = f"{class_} {uuid_} {key_} {str(value_)}"
-                                self.do_update(json_)
+                                str_ = f"{class_} {uuid_} {key_} {str(value_)}"
+                                self.do_update(str_)
                             else:
-                                json2_ = f"{class_} {uuid_} {key_} \"{value_}\""
-                                self.do_update(json2_)
+                                str2_ = f"{class_} {uuid_} {key_} \"{value_}\""
+                                self.do_update(str2_)
                     except json.decoder.JSONDecodeError:
                         update_list = jsondata_.split(',')
                         update_list[1] = update_list[1].strip(' ')
