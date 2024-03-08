@@ -18,8 +18,9 @@ class TestBaseModel(unittest.TestCase):
         self.new_model = BaseModel()
         self.new_model.name = "Dennis McField"
 
-    def test_name(self):
+    def test_model(self):
         self.assertEqual(self.new_model.name, "Dennis McField")
+        print(self.new_model.created_at)
 
     def test_init(self):
         """
