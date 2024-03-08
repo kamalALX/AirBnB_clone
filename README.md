@@ -1,4 +1,4 @@
-![Alt Text](https://s3.amazonaws.com/alx-intranet.hbtn.io/uploads/medias/2018/6/65f4a1dd9c51265f49d0.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIARDDGGGOUSBVO6H7D%2F20240308%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20240308T214043Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-Amz-Signature=f2e0d361ae326f01a211eeeb00434362bc716ef111908a3efb8f95a30a38b595)
+![Alt Text](https://i.imgur.com/ogbfW3k.png)
 
 # AirBnB Clone Project
 
