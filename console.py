@@ -24,6 +24,7 @@ class_mapping = {
 
 
 def check_comand(comand):
+    """check input type"""
     try:
         comand = int(comand)
         return comand
@@ -36,10 +37,11 @@ def check_comand(comand):
 
 
 class HBNBCommand(cmd.Cmd):
+    """using python command line Cmd"""
     prompt = "(hbnb) "
 
     def do_create(self, line):
-        'create Model'
+        """create Model"""
         try:
             create_instance = class_mapping[line]()
             create_instance.save()
@@ -50,7 +52,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
 
     def do_show(self, line):
-        'show Model id'
+        """show Model id"""
         arg = line.split()
         try:
             key = ("{}.{}".format(arg[0], arg[1]))
@@ -69,7 +71,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
 
     def do_destroy(self, line):
-        'destroy Model id'
+        """destroy Model id"""
         arg = line.split()
         length = len(arg)
 
@@ -87,7 +89,7 @@ class HBNBCommand(cmd.Cmd):
             models.storage.save()
 
     def do_all(self, line):
-        'all Model'
+        """all Model"""
         dictio = models.storage.all()
         lista_all = []
         lista_class = []
@@ -105,7 +107,7 @@ class HBNBCommand(cmd.Cmd):
             print(lista_all)
 
     def do_count(self, line):
-        'all Model'
+        """all Model"""
         dictio = models.storage.all()
         lista_all = []
         lista_class = []
@@ -127,10 +129,9 @@ class HBNBCommand(cmd.Cmd):
             print(count_)
 
     def do_update(self, line):
-        'update Model id attribute value'
+        """update Model id attribute value"""
         comand = line.split()
         ln = len(comand)
-
         try:
             cls_found, id_found = 0, 0
             for key, value in (models.storage.all()).items():
@@ -142,7 +143,7 @@ class HBNBCommand(cmd.Cmd):
                         comand[3] = check_comand(comand[3])
                         setattr(value, comand[2], comand[3])
                         models.storage.save()
-                        return False
+                        return
             if cls_found == 0:
                 print("** class doesn't exist **")
                 return False
@@ -161,7 +162,7 @@ class HBNBCommand(cmd.Cmd):
                 print("** value missing **")
 
     def default(self, line):
-        'default command'
+        """default command"""
         try:
             list = line[0:-1].split('(')
             try:
@@ -190,25 +191,32 @@ class HBNBCommand(cmd.Cmd):
                         argument_dict = json.loads(jsondata_)
                         for key_, value_ in argument_dict.items():
                             if not isinstance(value_, str):
-                                self.do_update(f"{class_} {uuid_} {key_} {str(value_)}")
+                                str_ = f"{class_} {uuid_} {key_} {str(value_)}"
+                                self.do_update(str_)
                             else:
-                                self.do_update(f"{class_} {uuid_} {key_} \"{value_}\"")
+                                str2_ = f"{class_} {uuid_} {key_} \"{value_}\""
+                                self.do_update(str2_)
                     except json.decoder.JSONDecodeError:
-                        update_list = [elem.strip('" ') for elem in jsondata_.split(',')]
-                        self.do_update(f"{class_} {uuid_} {update_list[0]} {update_list[1]}")
+                        update_list = jsondata_.split(',')
+                        update_list[1] = update_list[1].strip(' ')
+                        update_list[0] = update_list[0].strip(' "')
+                        str_ = f"{class_} {uuid_}"
+                        str2_ = f"{update_list[0]} {update_list[1]}"
+                        str3_ = f"{str_} {str2_}"
+                        self.do_update(str3_)
         except IndexError:
             pass
 
     def do_EOF(self, line):
-        'Quit program if EOF entered'
+        """Quit program if EOF entered"""
         return True
 
     def do_quit(self, line):
-        'Quit command to exit the program'
+        """Quit command to exit the program"""
         return True
 
     def emptyline(self):
-        'an empty line + ENTER shouldn’t execute anything'
+        """an empty line + ENTER shouldn’t execute anything"""
         return False
 
 
