@@ -21,10 +21,6 @@ class TestBaseModel(unittest.TestCase):
     def test_name(self):
         self.assertEqual(self.new_model.name, "Dennis McField")
 
-    def test_obj(self):
-        bmObj = BaseModel()
-
-
     def test_init(self):
         """
         Test init
