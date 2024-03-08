@@ -16,6 +16,10 @@ class TestBaseModel(unittest.TestCase):
         self.new_model = BaseModel()
         self.name = "Dennis McField"
 
+    def test_obj(self):
+        bmObj = BaseModel()
+
+
     def test_init(self):
         """
         Test init

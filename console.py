@@ -139,20 +139,7 @@ class HBNBCommand(cmd.Cmd):
                     cls_found = 1
                     if comand[1] == new_key[1]:
                         id_found = 1
-                        """try:
-                            if comand[3][0:1] == '"' and comand[3][-1:-2] == '"':
-                                comand[3] = comand[3][1:-1]
-                            typ = (type(getattr(value, comand[2])))
-                            setattr(value, comand[2], typ((comand[3])))
-                        except AttributeError:
-                            if comand[3][0:1] == '"' and comand[3][-1:-2] == '"':
-                                comand[3] = comand[3][1:-1]
-                            else:
-                                typ = int
-                            setattr(value, comand[2], typ(comand[3]))"""
                         comand[3] = check_comand(comand[3])
-                        print(comand[3])  # delete this
-                        print(type(comand[3]))
                         setattr(value, comand[2], comand[3])
                         models.storage.save()
                         return False
