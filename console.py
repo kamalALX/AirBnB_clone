@@ -56,7 +56,10 @@ class HBNBCommand(cmd.Cmd):
                 else:
                     print("** class doesn't exist **")
         except KeyError:
-            print("** no instance found **")
+            if len(arg) == 2 and arg[0] not in class_mapping:
+                print("** class doesn't exist **")
+            else:
+                print("** no instance found **")
 
     def do_destroy(self, line):
         """destroy Model id"""
