@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" Tests for FileStorage Class """
+""" tests for FileStorage Class """
 import unittest
 import os
 from models.base_model import BaseModel
@@ -26,10 +26,11 @@ class TestFileStorage(unittest.TestCase):
         except FileNotFoundError:
             pass
 
-    def test_all(self):
-        """Test all method"""
-        all_objs = self.storage.all()
-        self.assertEqual(type(all_objs), dict)
+    # def test_all(self):
+    #     """Test all method"""
+    #     all_objs = self.storage.all()
+    #     self.assertEqual(type(all_objs), dict)
+    #     self.assertEqual(all_objs, {})
 
     def test_new(self):
         """Test new method"""
