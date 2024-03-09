@@ -42,7 +42,7 @@ class FileStorage():
         for key, obj in FileStorage.__objects.items():
             formatted_dictionary[key] = obj.to_dict()
         with open(FileStorage.__file_path, "w") as fileJSON:
-            json.dump(formatted_dictionary, fileJSON)
+            json.dump(formatted_dictionary, fileJSON, indent=4)
 
     def reload(self):
         """ loads from file.json into objects """
