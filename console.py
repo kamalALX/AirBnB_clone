@@ -25,7 +25,7 @@ class_mapping = {
 
 class HBNBCommand(cmd.Cmd):
     """using python command line Cmd"""
-    prompt = "(hbnb) "
+    prompt = "(hbnb)"
 
     def do_create(self, line):
         """create Model"""
