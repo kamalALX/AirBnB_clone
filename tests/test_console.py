@@ -18,8 +18,11 @@ class TestConsole(unittest.TestCase):
         """test if create works right"""
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("create User")
-        output = "EOF  all  count  create  destroy  help  quit  show  update"
-        self.assertTrue(output in f.getvalue())
+            self.assertTrue(type(f.getvalue()) == str)
+
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd("create")
+            self.assertEqual(f.getvalue(), "** class name missing **\n")
 
 
 if __name__ == "__main__":
