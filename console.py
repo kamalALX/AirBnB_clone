@@ -188,11 +188,11 @@ class HBNBCommand(cmd.Cmd):
                 TypeError, AttributeError):
             pass
 
-    def do_EOF(self, _):
+    def do_EOF(self, line):
         """Quit program if EOF entered"""
         return True
 
-    def do_quit(self, _):
+    def do_quit(self, line):
         """Quit command to exit the program"""
         return True
 
