@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-FileStorage engine methods
+This module conatins FileStorage class
 """
 import json
 from models.base_model import BaseModel
@@ -25,7 +25,8 @@ class_mapping = {
 
 class FileStorage():
     """
-    FileStorage class
+    This serializes instances to a JSON file
+    and deserializes JSON file to instances.
     """
     __file_path = "file.json"
     __objects = {}
