@@ -34,7 +34,7 @@ class FileStorage():
         """
         return all objects
         """
-        return self.__objects
+        return FileStorage.__objects
 
     def new(self, obj):
         """
@@ -49,9 +49,9 @@ class FileStorage():
         save objects into file.json
         """
         formatted_dictionary = {}
-        for key, obj in self.__objects.items():
+        for key, obj in FileStorage.__objects.items():
             formatted_dictionary[key] = obj.to_dict()
-        with open(self.__file_path, "w") as fileJSON:
+        with open(FileStorage.__file_path, "w") as fileJSON:
             json.dump(formatted_dictionary, fileJSON)
 
     def reload(self):
@@ -60,7 +60,7 @@ class FileStorage():
         """
         try:
             new__objects = {}
-            with open(self.__file_path, "r") as fileJSON:
+            with open(FileStorage.__file_path, "r") as fileJSON:
                 new__objects = json.load(fileJSON)
                 for obj in new__objects.values():
                     class_name = obj["__class__"]
