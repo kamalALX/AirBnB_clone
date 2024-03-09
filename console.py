@@ -74,7 +74,10 @@ class HBNBCommand(cmd.Cmd):
                 del objs[key]
                 models.storage.save()
             except KeyError:
-                print("** no instance found **")
+                if arg[0] not in class_mapping:
+                    print("** class doesn't exist **")
+                else:
+                    print("** no instance found **")
         except IndexError:
             if length == 0:
                 print("** class name missing **")

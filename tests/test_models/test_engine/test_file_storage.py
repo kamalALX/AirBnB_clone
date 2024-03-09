@@ -85,13 +85,17 @@ class TestFileStorage(unittest.TestCase):
         all_objs = new_storage.all()
         self.assertIn(f"{obj1.__class__.__name__}.{obj1.id}", all_objs)
 
-    # def test_reload_nonexistent_file(self):
-    #     """Test reload method with a nonexistent file"""
+    def test_reload_nonexistent_file(self):
+        """Test reload method with a nonexistent file"""
+        try:
+            os.remove(FileStorage._FileStorage__file_path)
+        except Exception:
+            pass
 
-    #     new_storage = FileStorage()
-    #     new_storage.reload()
-    #     all_objs = new_storage.all()
-    #     self.assertEqual(len(all_objs), 0)
+        new_storage = FileStorage()
+        new_storage.reload()
+        all_objs = new_storage.all()
+        self.assertEqual(len(all_objs), 0)
 
     def test_reload_empty_file(self):
         """Test reload method with an empty file"""
