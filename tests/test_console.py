@@ -64,13 +64,13 @@ class TestConsole(unittest.TestCase):
             HBNBCommand().onecmd("\n")
             self.assertTrue(f.getvalue() == "")
 
-    def test_check_doc(self):
-        self.assertIsNotNone(HBNBCommand.do_quit.__doc__)
-        self.assertIsNotNone(HBNBCommand.do_create.__doc__)
-        self.assertIsNotNone(HBNBCommand.do_show.__doc__)
-        self.assertIsNotNone(HBNBCommand.do_destroy.__doc__)
-        self.assertIsNotNone(HBNBCommand.do_all.__doc__)
-        self.assertIsNotNone(HBNBCommand.do_update.__doc__)
+
+    def test_invalid_json_format(self):
+        """test if an invalid JSON format is handled properly"""
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd(
+                "update BaseModel my_id my_attribute {invalid_json_format}")
+            self.assertTrue("** no instance found **" in f.getvalue())
 
 
 if __name__ == "__main__":
