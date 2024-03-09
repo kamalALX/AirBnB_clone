@@ -26,6 +26,10 @@ class TestConsole(unittest.TestCase):
             HBNBCommand().onecmd("create")
             self.assertEqual(f.getvalue(), "** class name missing **\n")
 
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd("create noclass")
+            self.assertTrue(f.getvalue() == "** class doesn't exist **\n")
+
     def test_quit(self):
         """test if quit works right"""
         with patch('sys.stdout', new=StringIO()) as f:
