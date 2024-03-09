@@ -122,21 +122,18 @@ class HBNBCommand(cmd.Cmd):
         comand = line.split(maxsplit=3)
         ln = len(comand)
         try:
-            cls_found, id_found = 0, 0
-            for key, value in (models.storage.all()).items():
-                new_key = key.split(".")
-                if comand[0] == new_key[0]:
-                    cls_found = 1
-                    if comand[1] == new_key[1]:
-                        id_found = 1
-                        setattr(value, comand[2], comand[3].strip('"'))
-                        models.storage.save()
-                        return
-            if cls_found == 0:
-                print("** class doesn't exist **")
-                return False
-            elif id_found == 0:
-                print("** no instance found **")
+            key = "{}.{}".format(comand[0], comand[1])
+            try:
+                instance = models.storage.all()[key]
+                setattr(instance, comand[2], comand[3].strip('"'))
+                models.storage.save()
+            # except KeyError:
+            #     print("** no instance found **")
+            except KeyError:
+                if comand[0] in class_mapping:
+                    print("** no instance found **")
+                else:
+                    print("** class doesn't exist **")
         except IndexError:
             if ln == 0:
                 print("** class name missing **")
