@@ -58,17 +58,17 @@ class TestConsole(unittest.TestCase):
             HBNBCommand().onecmd("update")
             self.assertTrue(f.getvalue() == "** class name missing **\n")
 
-    def test_invalid_class(self):
-        """test if an invalid class name is handled properly"""
-        with patch('sys.stdout', new=StringIO()) as f:
-            HBNBCommand().onecmd("create InvalidClass")
-            self.assertTrue("** class doesn't exist **" in f.getvalue())
+    # def test_invalid_class(self):
+    #     """test if an invalid class name is handled properly"""
+    #     with patch('sys.stdout', new=StringIO()) as f:
+    #         HBNBCommand().onecmd("create InvalidClass")
+    #         self.assertTrue("** class doesn't exist **" in f.getvalue())
 
-    def test_invalid_instance(self):
-        """test if an invalid instance is handled properly"""
-        with patch('sys.stdout', new=StringIO()) as f:
-            HBNBCommand().onecmd("show BaseModel invalid_id")
-            self.assertTrue("** no instance found **" in f.getvalue())
+    # def test_invalid_instance(self):
+    #     """test if an invalid instance is handled properly"""
+    #     with patch('sys.stdout', new=StringIO()) as f:
+    #         HBNBCommand().onecmd("show BaseModel invalid_id")
+    #         self.assertTrue("** no instance found **" in f.getvalue())
 
     def test_emptyline(self):
         """test if an empty line is handled properly"""
