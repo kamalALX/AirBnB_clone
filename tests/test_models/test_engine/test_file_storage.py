@@ -59,6 +59,24 @@ class TestFileStorage(unittest.TestCase):
         all_objs = new_storage.all()
         self.assertEqual(len(all_objs), 0)
 
+    def test_all_returns_dict(self):
+        """Test all method returns a dictionary"""
+        all_objs = self.storage.all()
+        self.assertIsInstance(all_objs, dict)
+
+    def test_new_adds_to_all(self):
+        """Test new method adds object to __objects"""
+        obj = BaseModel()
+        self.storage.new(obj)
+        all_objs = self.storage.all()
+        self.assertIn(f"{obj.__class__.__name__}.{obj.id}", all_objs)
+
+    def test_new_with_no_object(self):
+        """Test new method with no object"""
+        initial_count = len(self.storage.all())
+        self.storage.new(None)
+        self.assertEqual(len(self.storage.all()), initial_count)
+
 
 if __name__ == "__main__":
     unittest.main()
