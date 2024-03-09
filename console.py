@@ -49,7 +49,10 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
             return
         elif len(arg) == 1:
-            print("** instance id missing **")
+            if arg[0] in class_mapping:
+                print("** instance id missing **")
+            else:
+                print("** class doesn't exist **")
             return
         try:
             key = ("{}.{}".format(arg[0], arg[1]))
