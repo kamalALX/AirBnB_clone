@@ -45,6 +45,7 @@ class TestFileStorage(unittest.TestCase):
     def test_reload_empty_file(self):
         """Test reload method with an empty file"""
         new_storage = FileStorage()
+        new_storage.all().clear()
         new_storage.reload()
         all_objs = new_storage.all()
         self.assertEqual(len(all_objs), 0)
