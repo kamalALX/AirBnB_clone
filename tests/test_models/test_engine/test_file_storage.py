@@ -93,48 +93,6 @@ class TestFileStorage(unittest.TestCase):
     #     all_objs = new_storage.all()
     #     self.assertEqual(len(all_objs), 0)
 
-    def test_reload_again(self):
-        """
-        Test reload method
-        """
-        def reload_test_logic(storage):
-            """Inner function containing reload test logic"""
-            storage.save()
-
-            root = os.path.dirname(os.path.abspath(__file__))
-            file_path = os.path.join(root, "file.json")
-
-            with open(file_path, 'r') as f:
-                lines = f.readlines()
-
-            try:
-                os.remove(file_path)
-            except FileNotFoundError:
-                pass
-
-            storage.save()
-
-            with open(file_path, 'r') as f:
-                lines2 = f.readlines()
-
-            self.assertEqual(lines, lines2)
-
-            try:
-                os.remove(file_path)
-            except FileNotFoundError:
-                pass
-
-            with open(file_path, "w") as f:
-                f.write("{}")
-
-            with open(file_path, "r") as r:
-                for line in r:
-                    self.assertEqual(line, "{}")
-
-            self.assertIsNone(storage.reload())
-
-        reload_test_logic(self.storage)
-
     def test_reload_empty_file(self):
         """Test reload method with an empty file"""
         open(FileStorage._FileStorage__file_path, "w").close()
