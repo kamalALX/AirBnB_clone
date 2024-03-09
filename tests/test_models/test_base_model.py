@@ -46,7 +46,10 @@ class TestBaseModel(unittest.TestCase):
         self.assertIn('updated_at', base_model_dict)
 
     def test_str_representation(self):
-        expected_str = f"[BaseModel] ({self.base_model.id}) {self.base_model.__dict__}"
+        expected_str = (
+            f"[BaseModel] ({self.base_model.id}) "
+            f"{self.base_model.__dict__}"
+        )
         self.assertEqual(str(self.base_model), expected_str)
 
     def test_init_with_kwargs(self):
@@ -58,8 +61,13 @@ class TestBaseModel(unittest.TestCase):
         }
         base_model = BaseModel(**data)
         self.assertEqual(base_model.id, "123")
-        self.assertEqual(base_model.created_at.isoformat(), "2022-01-01T00:00:00")
-        self.assertEqual(base_model.updated_at.isoformat(), "2022-01-01T00:00:00")
+        self.assertEqual(
+                base_model.created_at.isoformat(),
+                "2022-01-01T00:00:00"
+                )
+        self.assertEqual(
+                base_model.updated_at.isoformat(), "2022-01-01T00:00:00"
+                )
         self.assertEqual(base_model.name, "Test")
 
     def test_to_dict2(self):
