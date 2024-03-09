@@ -42,18 +42,14 @@ class FileStorage():
         for key, obj in FileStorage.__objects.items():
             formatted_dictionary[key] = obj.to_dict()
         with open(FileStorage.__file_path, "w") as fileJSON:
-            json.dump(formatted_dictionary, fileJSON, indent=4)
+            json.dump(formatted_dictionary, fileJSON)
 
     def reload(self):
         """ loads from file.json into objects """
         try:
-            FileStorage.__objects.clear()
-            new__objects = {}
-            with open(FileStorage.__file_path, "r") as fileJSON:
-                new__objects = json.load(fileJSON)
-                for obj in new__objects.values():
-                    class_name = obj["__class__"]
-                    if class_name in class_mapping:
-                        self.new(class_mapping[class_name](**obj))
-        except (FileNotFoundError, json.decoder.JSONDecodeError):
-            pass
+            with open(FileStorage.__file_path, 'r') as filejsonload:
+                dict_load = json.load(filejsonload)
+                for k, v in dict_load.items():
+                    FileStorage.__objects[k] = eval(v["__class__"])(**v)
+        except FileNotFoundError:
+            return
