@@ -152,10 +152,8 @@ class HBNBCommand(cmd.Cmd):
         """default command"""
         try:
             list = line[0:-1].split('(')
-            try:
+            if '' in list:
                 list.remove('')
-            except ValueError:
-                pass
             left_list = list[0].split('.')
             function_ = left_list[1]
             class_ = left_list[0]
@@ -168,30 +166,25 @@ class HBNBCommand(cmd.Cmd):
                 right_list = list[1].split(',', 1)
                 uuid_ = right_list[0].strip('"')
                 if function_ == "show":
-                    self.do_show(class_ + " " + uuid_)
+                    self.do_show(f"{class_} {uuid_}")
                 if function_ == "destroy":
-                    self.do_destroy(class_ + " " + uuid_)
+                    self.do_destroy(f"{class_} {uuid_}")
 
                 if function_ == "update":
-                    jsondata_ = right_list[1].replace("'", '"')
-                    try:
-                        argument_dict = json.loads(jsondata_)
-                        for key_, value_ in argument_dict.items():
-                            if not isinstance(value_, str):
-                                str_ = f"{class_} {uuid_} {key_} {str(value_)}"
-                                self.do_update(str_)
-                            else:
-                                str2_ = f"{class_} {uuid_} {key_} \"{value_}\""
-                                self.do_update(str2_)
-                    except json.decoder.JSONDecodeError:
-                        update_list = jsondata_.split(',')
-                        update_list[1] = update_list[1].strip(' ')
-                        update_list[0] = update_list[0].strip(' "')
-                        str_ = f"{class_} {uuid_}"
-                        str2_ = f"{update_list[0]} {update_list[1]}"
-                        str3_ = f"{str_} {str2_}"
-                        self.do_update(str3_)
-        except IndexError:
+                    jsondata_ = right_list[1].replace("'", '"').strip()
+                    if '{' not in jsondata_:
+                        key, value = jsondata_.split(',')
+                        jsondata_ = f"{{{key.strip()}: {value.strip()}}}"
+                    argument_dict = json.loads(jsondata_)
+                    for key_, value_ in argument_dict.items():
+                        if not isinstance(value_, str):
+                            str_ = f"{class_} {uuid_} {key_} {str(value_)}"
+                            self.do_update(str_)
+                        else:
+                            str2_ = f"{class_} {uuid_} {key_} \"{value_}\""
+                            self.do_update(str2_)
+        except (IndexError, json.decoder.JSONDecodeError,
+                TypeError, AttributeError):
             pass
 
     def do_EOF(self, _):
