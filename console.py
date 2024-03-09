@@ -36,7 +36,10 @@ class HBNBCommand(cmd.Cmd):
         except SyntaxError:
             print("** class name missing **")
         except (NameError, KeyError):
-            print("** class doesn't exist **")
+            if line:
+                print(" class doesn't exist ")
+            else:
+                print(" class name missing ")
 
     def do_show(self, line):
         """show Model id"""
