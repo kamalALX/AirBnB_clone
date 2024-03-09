@@ -29,17 +29,15 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, line):
         """create Model"""
-        try:
-            create_instance = class_mapping[line]()
-            create_instance.save()
-            print(create_instance.id)
-        except SyntaxError:
-            print("** class name missing **")
-        except (NameError, KeyError):
-            if line:
+        if line:
+            try:
+                create_instance = class_mapping[line]()
+                create_instance.save()
+                print(create_instance.id)
+            except KeyError:
                 print("** class doesn't exist **")
-            else:
-                print("** class name missing **")
+        else:
+            print("** class name missing **")
 
     def do_show(self, line):
         """show Model id"""
