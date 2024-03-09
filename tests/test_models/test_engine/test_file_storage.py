@@ -101,6 +101,38 @@ class TestFileStorage(unittest.TestCase):
         all_objs = new_storage.all()
         self.assertEqual(len(all_objs), 0)
 
+    def test_delete_method(self):
+        """Test delete method"""
+        obj1 = BaseModel()
+        obj2 = BaseModel()
+        self.storage.new(obj1)
+        self.storage.new(obj2)
+        self.storage.save()
+
+        self.storage.delete(obj1)
+        all_objs = self.storage.all()
+        self.assertNotIn(f"{obj1.__class__.__name__}.{obj1.id}", all_objs)
+        self.assertIn(f"{obj2.__class__.__name__}.{obj2.id}", all_objs)
+
+    def test_delete_nonexistent_object(self):
+        """Test delete method with non-existent object"""
+        obj1 = BaseModel()
+        self.storage.new(obj1)
+        self.storage.save()
+
+        obj2 = BaseModel()
+        self.storage.delete(obj2)
+
+        all_objs = self.storage.all()
+        self.assertIn(f"{obj1.__class__.__name__}.{obj1.id}", all_objs)
+        self.assertNotIn(f"{obj2.__class__.__name__}.{obj2.id}", all_objs)
+
+    def test_delete_with_no_object(self):
+        """Test delete method with no object"""
+        initial_count = len(self.storage.all())
+        self.storage.delete(None)
+        self.assertEqual(len(self.storage.all()), initial_count)
+
 
 if __name__ == "__main__":
     unittest.main()
