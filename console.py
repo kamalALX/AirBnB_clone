@@ -121,7 +121,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_update(self, line):
         """ update tne object """
-        comand = line.split()
+        comand = line.split(maxsplit=3)
         ln = len(comand)
         try:
             key = "{}.{}".format(comand[0], comand[1])
