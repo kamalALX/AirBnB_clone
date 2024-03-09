@@ -19,9 +19,8 @@ class TestConsole(unittest.TestCase):
     def test_create(self):
         """test if create works right"""
         with patch('sys.stdout', new=StringIO()) as f:
-            HBNBCommand().onecmd("create User")
-            self.assertTrue(type(f.getvalue()) == str)
-
+            HBNBCommand().onecmd("create")
+            self.assertEqual(f.getvalue(), "** class name missing **\n")
     # def test_quit(self):
     #     """test if quit works right"""
     #     with patch('sys.stdout', new=StringIO()) as f:
