@@ -48,6 +48,11 @@ class TestFileStorage(unittest.TestCase):
         all_objs = new_storage.all()
         self.assertIn("BaseModel." + obj1.id, all_objs)
 
+    def test_all_returns_dict(self):
+        """Test all method returns a dictionary"""
+        all_objs = self.storage.all()
+        self.assertIsInstance(all_objs, dict)
+
 
 if __name__ == "__main__":
     unittest.main()
