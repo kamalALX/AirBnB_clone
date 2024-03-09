@@ -6,7 +6,6 @@ import unittest
 import os
 from models.base_model import BaseModel
 from models.engine.file_storage import FileStorage
-from models import storage
 
 
 class TestFileStorage(unittest.TestCase):
@@ -88,7 +87,11 @@ class TestFileStorage(unittest.TestCase):
 
     def test_reload_nonexistent_file(self):
         """Test reload method with a nonexistent file"""
-        self.assertEqual(storage.reload(), None)
+
+        new_storage = FileStorage()
+        new_storage.reload()
+        all_objs = new_storage.all()
+        self.assertEqual(len(all_objs), 0)
 
     def test_reload_empty_file(self):
         """Test reload method with an empty file"""

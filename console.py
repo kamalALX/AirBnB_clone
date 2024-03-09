@@ -40,6 +40,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
 
     def do_show(self, line):
+        # problem here show fake 79858960-d3ae-4d31-8f2f-ffd52877bbc1
         """show Model id"""
         arg = line.split()
         try:
