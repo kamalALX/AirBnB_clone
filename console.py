@@ -129,8 +129,12 @@ class HBNBCommand(cmd.Cmd):
             key = "{}.{}".format(comand[0], comand[1])
             try:
                 instance = models.storage.all()[key]
-                comand[3] = comand[3].strip('"')
-                setattr(instance, comand[2], eval(comand[3]))
+                # comand[3] = comand[3].strip('"')
+                try:
+                    comand[3] = eval(comand[3])
+                except:
+                    pass
+                setattr(instance, comand[2], comand[3])
                 models.storage.save()
             # except KeyError:
             #     print("** no instance found **")
