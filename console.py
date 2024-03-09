@@ -119,6 +119,7 @@ class HBNBCommand(cmd.Cmd):
             print(count_)
 
     def do_update(self, line):
+        """ update tne object """
         comand = line.split(maxsplit=3)
         ln = len(comand)
         try:
