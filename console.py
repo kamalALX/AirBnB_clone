@@ -137,6 +137,7 @@ class HBNBCommand(cmd.Cmd):
                         #     print(comand[3])
                         #     comand[3] = comand[3][1:-1]
                         #     print(comand[3])
+                        setattr(value, comand[2], comand[3])
                         models.storage.save()
                         return
             if cls_found == 0:
