@@ -87,10 +87,7 @@ class TestFileStorage(unittest.TestCase):
 
     def test_reload_nonexistent_file(self):
         """Test reload method with a nonexistent file"""
-        try:
-            os.remove(FileStorage._FileStorage__file_path)
-        except FileNotFoundError:
-            pass
+        os.remove(FileStorage._FileStorage__file_path)
         new_storage = FileStorage()
         new_storage.reload()
         all_objs = new_storage.all()
