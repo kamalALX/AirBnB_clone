@@ -47,7 +47,6 @@ class FileStorage():
     def reload(self):
         """ loads from file.json into objects """
         try:
-            FileStorage.__objects.clear()
             new__objects = {}
             with open(FileStorage.__file_path, "r") as fileJSON:
                 new__objects = json.load(fileJSON)
@@ -55,5 +54,5 @@ class FileStorage():
                     class_name = obj["__class__"]
                     if class_name in class_mapping:
                         self.new(class_mapping[class_name](**obj))
-        except (FileNotFoundError, json.decoder.JSONDecodeError):
+        except Exception:
             pass
