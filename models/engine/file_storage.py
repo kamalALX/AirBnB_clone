@@ -34,7 +34,7 @@ class FileStorage():
         """ create new object """
         if obj:
             key = "{}.{}".format(type(obj).__name__, obj.id)
-            self.__objects[key] = obj
+            FileStorage.__objects[key] = obj
 
     def save(self):
         """ save objects into file.json """

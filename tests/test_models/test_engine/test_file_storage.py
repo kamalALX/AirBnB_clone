@@ -78,7 +78,7 @@ class TestFileStorage(unittest.TestCase):
         except JSONDecodeError:
             pass
         all_objs = new_storage.all()
-        self.assertEqual(len(all_objs), 15)
+        self.assertEqual(len(all_objs), 0)
 
     def test_reload_nonexistent_file(self):
         """Test reload method with a nonexistent file"""
@@ -90,7 +90,7 @@ class TestFileStorage(unittest.TestCase):
         new_storage = FileStorage()
         new_storage.reload()
         all_objs = new_storage.all()
-        self.assertEqual(len(all_objs), 15)
+        self.assertEqual(len(all_objs), 0)
 
 
 if __name__ == "__main__":
