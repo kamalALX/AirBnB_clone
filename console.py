@@ -125,7 +125,6 @@ class HBNBCommand(cmd.Cmd):
         ln = len(comand)
         if ln > 4:
             comand = comand[:4]
-            print(comand)
         try:
             key = "{}.{}".format(comand[0], comand[1])
             try:
