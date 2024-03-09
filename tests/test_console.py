@@ -34,6 +34,30 @@ class TestConsole(unittest.TestCase):
             HBNBCommand().onecmd("show")
             self.assertTrue(f.getvalue() == "** class name missing **\n")
 
+    def test_destroy(self):
+        """test if destroy works right"""
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd("destroy")
+            self.assertTrue(f.getvalue() == "** class name missing **\n")
+
+    def test_all(self):
+        """test if all works right"""
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd("all")
+            self.assertTrue(f.getvalue() != "")
+
+    def test_count(self):
+        """test if count works right"""
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd("count")
+            self.assertTrue(f.getvalue() != "")
+
+    def test_update(self):
+        """test if update works right"""
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd("update")
+            self.assertTrue(f.getvalue() == "** class name missing **\n")
+
 
 if __name__ == "__main__":
     unittest.main()
