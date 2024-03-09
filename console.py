@@ -118,44 +118,74 @@ class HBNBCommand(cmd.Cmd):
         else:
             print(count_)
 
-    def do_update(self, line):
-        """update Model id attribute value"""
-        comand = line.split(maxsplit=3)
-        ln = len(comand)
-        try:
-            cls_found, id_found = 0, 0
-            for key, value in (models.storage.all()).items():
-                new_key = key.split(".")
-                if comand[0] == new_key[0]:
-                    cls_found = 1
-                    if comand[1] == new_key[1]:
-                        id_found = 1
-                        # if comand[2] in ['id', 'created_at', 'updated_at']:
-                        #     return
-                        # comand[3] = json.loads(comand[3])
-                        # if comand[3][0:1] == '"' and comand[3][-1:] == '"':
-                        #     print(comand[3])
-                        #     comand[3] = comand[3][1:-1]
-                        #     print(comand[3])
-                        setattr(value, comand[2], comand[3])
-                        models.storage.save()
-                        return
-            if cls_found == 0:
+    # def do_update(self, line):
+    #     """update Model id attribute value"""
+    #     comand = line.split(maxsplit=3)
+    #     ln = len(comand)
+    #     try:
+    #         cls_found, id_found = 0, 0
+    #         for key, value in (models.storage.all()).items():
+    #             if ln == 3 and comand[0] not in class_mapping:
+    #                 print("** class name missing **")
+    #                 return
+    #             new_key = key.split(".")
+    #             if comand[0] == new_key[0]:
+    #                 cls_found = 1
+    #                 if comand[1] == new_key[1]:
+    #                     id_found = 1
+    #                     if comand[2] in ['id', 'created_at', 'updated_at']:
+    #                         return
+    #                     # comand[3] = json.loads(comand[3])
+    #                     # if comand[3][0:1] == '"' and comand[3][-1:] == '"':
+    #                     #     print(comand[3])
+    #                     #     comand[3] = comand[3][1:-1]
+    #                     #     print(comand[3])
+    #                     comand[3] = json.loads(comand[3])
+    #                     setattr(value, comand[2], comand[3])
+    #                     models.storage.save()
+    #                     return
+    #         if cls_found == 0:
+    #             print("** class doesn't exist **")
+    #             return False
+    #         elif id_found == 0:
+    #             print("** no instance found **")
+    #     except IndexError:
+    #         if ln == 0:
+    #             print("** class name missing **")
+    #         elif ln >= 1 and comand[0] not in class_mapping:
+    #             print("** class doesn't exist **")
+    #         elif ln == 1 and comand[0] in class_mapping:
+    #             print("** instance id missing **")
+    #         elif ln == 2:
+    #             print("** attribute name missing **")
+    #         elif ln == 3:
+    #             print("** value missing **")
+
+    def do_update(self, arg):
+        """Updates an instance adding or updating attribute"""
+        if arg:
+            arg = arg.split()
+            if arg[0] in class_mapping:
+                if len(arg) > 1:
+                    key = "{}.{}".format(arg[0], arg[1])
+                    try:
+                        instance = models.storage.all()[key]
+                        if len(arg) > 2:
+                            if len(arg) > 3:
+                                setattr(instance, arg[2], arg[3].strip('"'))
+                                models.storage.save()
+                            else:
+                                print("** value missing **")
+                        else:
+                            print("** attribute name missing **")
+                    except:
+                        print("** no instance found **")
+                else:
+                    print("** instance id missing **")
+            else:
                 print("** class doesn't exist **")
-                return False
-            elif id_found == 0:
-                print("** no instance found **")
-        except IndexError:
-            if ln == 0:
-                print("** class name missing **")
-            elif ln >= 1 and comand[0] not in class_mapping:
-                print("** class doesn't exist **")
-            elif ln == 1 and comand[0] in class_mapping:
-                print("** instance id missing **")
-            elif ln == 2:
-                print("** attribute name missing **")
-            elif ln == 3:
-                print("** value missing **")
+        else:
+            print("** class name missing **")
 
     def default(self, line):
         """default command"""
