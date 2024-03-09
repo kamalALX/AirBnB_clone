@@ -26,7 +26,6 @@ class_mapping = {
 class FileStorage():
     """
     This serializes instances to a JSON file
-    and deserializes JSON file to instances.
     """
     __file_path = "file.json"
     __objects = {}
