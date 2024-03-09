@@ -133,10 +133,11 @@ class HBNBCommand(cmd.Cmd):
                         # if comand[2] in ['id', 'created_at', 'updated_at']:
                         #     return
                         # comand[3] = json.loads(comand[3])
-                        if comand[3][0:1] == '"' and comand[3][-1:] == '"':
-                            print(comand[3])
-                            comand[3] = comand[3][1:-1]
-                            print(comand[3])
+                        # if comand[3][0:1] == '"' and comand[3][-1:] == '"':
+                        #     print(comand[3])
+                        #     comand[3] = comand[3][1:-1]
+                        #     print(comand[3])
+                        comand[3] = json.loads(comand[3])
                         setattr(value, comand[2], comand[3])
                         models.storage.save()
                         return
