@@ -160,9 +160,6 @@ class HBNBCommand(cmd.Cmd):
             left_list = list[0].split('.')
             function_ = left_list[1]
             class_ = left_list[0]
-            if class_ not in class_mapping:
-                print("*** Unknown syntax: {}".format(line))
-                return
             if len(list) == 1:
                 if function_ == "all":
                     self.do_all(class_)
