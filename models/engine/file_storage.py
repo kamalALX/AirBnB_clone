@@ -12,6 +12,17 @@ from models.place import Place
 from models.review import Review
 
 
+class_mapping = {
+    "BaseModel": BaseModel,
+    "User": User,
+    "State": State,
+    "City": City,
+    "Amenity": Amenity,
+    "Place": Place,
+    "Review": Review,
+}
+
+
 class FileStorage():
     """
     This serializes instances to a JSON file
@@ -47,15 +58,6 @@ class FileStorage():
         """
         loads from file.json into objects
         """
-        class_mapping = {
-            "BaseModel": BaseModel,
-            "User": User,
-            "State": State,
-            "City": City,
-            "Amenity": Amenity,
-            "Place": Place,
-            "Review": Review,
-        }
         try:
             new__objects = {}
             with open(FileStorage.__file_path, "r") as fileJSON:
