@@ -40,27 +40,24 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
 
     def do_show(self, line):
-        # problem here show fake 79858960-d3ae-4d31-8f2f-ffd52877bbc1
         """show Model id"""
+        if not line:
+            print("** class name missing **")
+            return
         arg = line.split()
+        if arg[0] not in class_mapping:
+            print("** class doesn't exist **")
+            return
+        elif len(arg) == 1:
+            print("** instance id missing **")
+            return
         try:
             key = ("{}.{}".format(arg[0], arg[1]))
             loaded_objects = models.storage.all()
             loaded_instance = loaded_objects[key]
             print(loaded_instance)
-        except IndexError:
-            if len(arg) == 0:
-                print("** class name missing **")
-            elif len(arg) == 1:
-                if arg[0] in class_mapping:
-                    print("** instance id missing **")
-                else:
-                    print("** class doesn't exist **")
         except KeyError:
-            if len(arg) == 2 and arg[0] not in class_mapping:
-                print("** class doesn't exist **")
-            else:
-                print("** no instance found **")
+            print("** no instance found **")
 
     def do_destroy(self, line):
         """destroy Model id"""
