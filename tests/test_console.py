@@ -1,32 +1,26 @@
 import unittest
 from io import StringIO
 from unittest.mock import patch
-from console import HBNBCommand
+from console import HBNBCommand  # Import your console class
+
 
 class TestConsole(unittest.TestCase):
-    def setUp(self):
-        self.console = HBNBCommand()
-        self.console.prompt = ''
+    """this will test the console"""
 
-    def tearDown(self):
-        pass
+    def test_help(self):
+        """test if help works right"""
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd("help")
+        output = "EOF  all  count  create  destroy  help  quit  show  update"
+        self.assertTrue(output in f.getvalue())
 
-    @patch('sys.stdout', new_callable=StringIO)
-    def test_help_command(self, mock_stdout):
-        with patch('sys.stdin', side_effect=['EOF']):
-            self.console.onecmd("help")
-        output = mock_stdout.getvalue()
-        self.assertTrue("Documented commands" in output)
-
-    @patch('sys.stdout', new_callable=StringIO)
-    def test_quit_command(self, mock_stdout):
-        with patch('sys.stdin', side_effect=['EOF']):
-            self.console.onecmd("quit")
-        output = mock_stdout.getvalue()
-        self.assertEqual(output, "")
-
-    # Add more test cases for other commands/features
+    def test_create(self):
+        """test if create works right"""
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd("create User")
+        output = "EOF  all  count  create  destroy  help  quit  show  update"
+        self.assertTrue(output in f.getvalue())
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()
