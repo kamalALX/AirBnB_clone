@@ -10,7 +10,6 @@ from models.city import City
 from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
-import sys
 
 
 class_mapping = {
@@ -26,12 +25,7 @@ class_mapping = {
 
 class HBNBCommand(cmd.Cmd):
     """using python command line Cmd"""
-    prompt = '(hbnb) ' if sys.__stdin__.isatty() else ''
-
-    def preloop(self):
-        """Prints if isatty is false"""
-        if not sys.__stdin__.isatty():
-            print('(hbnb)')
+    prompt = "(hbnb) "
 
     def do_create(self, line):
         """create Model"""
@@ -198,12 +192,11 @@ class HBNBCommand(cmd.Cmd):
 
     def do_EOF(self, line):
         """Quit program if EOF entered"""
-        print()
-        exit(0)
+        return True
 
     def do_quit(self, line):
         """Quit command to exit the program"""
-        exit(0)
+        return True
 
     def emptyline(self):
         """an empty line + ENTER shouldn’t execute anything"""
