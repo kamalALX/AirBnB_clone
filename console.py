@@ -63,18 +63,21 @@ class HBNBCommand(cmd.Cmd):
         arg = line.split()
         length = len(arg)
 
-        if length == 0:
-            print("** class name missing **")
-        elif arg[0] not in class_mapping:
-            print("** class doesn't exist **")
-        else:
+        try:
             key = ("{}.{}".format(arg[0], arg[1]))
             objs = models.storage.all()
             try:
                 del objs[key]
+                models.storage.save()
             except KeyError:
                 print("** no instance found **")
-            models.storage.save()
+        except IndexError:
+            if length == 0:
+                print("** class name missing **")
+            elif arg[0] not in class_mapping:
+                print("** class doesn't exist **")
+            elif length == 1:
+                print("** instance id missing **")
 
     def do_all(self, line):
         """all Model"""
