@@ -22,8 +22,6 @@ class TestConsole(unittest.TestCase):
             HBNBCommand().onecmd("create User")
             self.assertTrue(type(f.getvalue()) == str)
 
-    def test_create_err(self):
-        """ test if create throw an error msg """
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("create")
             self.assertEqual(f.getvalue(), "** class name missing **\n")
