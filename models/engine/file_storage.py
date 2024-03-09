@@ -55,5 +55,5 @@ class FileStorage():
                     class_name = obj["__class__"]
                     if class_name in class_mapping:
                         self.new(class_mapping[class_name](**obj))
-        except FileNotFoundError:
+        except (FileNotFoundError, json.decoder.JSONDecodeError):
             pass
