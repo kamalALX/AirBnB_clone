@@ -26,6 +26,12 @@ class TestConsole(unittest.TestCase):
             HBNBCommand().onecmd("create")
             self.assertEqual(f.getvalue(), "** class name missing **\n")
 
+    def test_quit(self):
+        """test if quit works right"""
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd("quit")
+            self.assertTrue(f.getvalue() == "")
+
 
 if __name__ == "__main__":
     unittest.main()
