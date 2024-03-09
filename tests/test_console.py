@@ -64,7 +64,7 @@ class TestConsole(unittest.TestCase):
             HBNBCommand().onecmd("\n")
             self.assertTrue(f.getvalue() == "")
 
-    def check_doc(self):
+    def test_check_doc(self):
         self.assertIsNotNone(HBNBCommand.do_quit.__doc__)
         self.assertIsNotNone(HBNBCommand.do_create.__doc__)
         self.assertIsNotNone(HBNBCommand.do_show.__doc__)
