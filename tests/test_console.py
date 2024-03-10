@@ -62,6 +62,8 @@ class TestConsole(unittest.TestCase):
             HBNBCommand().onecmd("\n")
             self.assertTrue(f.getvalue() == "")
 
+# testing Destroy -----------------------------------------------
+
     def test_destroy_objects_space_notation(self):
         with patch("sys.stdout", new=StringIO()) as f:
             HBNBCommand().onecmd("create BaseModel")
@@ -84,44 +86,6 @@ class TestConsole(unittest.TestCase):
             command = f"BaseModel.destroy({test_id})"
             HBNBCommand().onecmd(command)
             self.assertNotIn(obj, models.storage.all())
-
-    def test_create_object(self):
-
-        with patch("sys.stdout", new=StringIO()) as f:
-            HBNBCommand().onecmd("create BaseModel")
-            test_key = f"BaseModel.{f.getvalue().strip()}"
-            self.assertIn(test_key, models.storage.all().keys())
-
-    def test_show_missing_class(self):
-        """Test behavior when class name is missing."""
-        expected_output = "** class name missing **"
-
-        with patch("sys.stdout", new=StringIO()) as output:
-            self.assertFalse(HBNBCommand().onecmd("show"))
-            self.assertEqual(expected_output, output.getvalue().strip())
-
-        with patch("sys.stdout", new=StringIO()) as output:
-            self.assertFalse(HBNBCommand().onecmd(".show()"))
-            self.assertNotEqual(expected_output, output.getvalue().strip())
-
-    def test_show_invalid_class(self):
-        """Test behavior when class doesn't exist."""
-        expected_output = "** class doesn't exist **"
-
-        with patch("sys.stdout", new=StringIO()) as output:
-            self.assertFalse(HBNBCommand().onecmd("show MyModel"))
-            self.assertEqual(expected_output, output.getvalue().strip())
-
-    def test_show_missing_id_space_notation(self):
-        """Test behavior when instance id is missing (space notation)."""
-        expected_output = "** instance id missing **"
-        model_classes = ["BaseModel", "User", "State",
-                         "City", "Amenity", "Place", "Review"]
-
-        for model_class in model_classes:
-            with patch("sys.stdout", new=StringIO()) as output:
-                self.assertFalse(HBNBCommand().onecmd(f"show {model_class}"))
-                self.assertEqual(expected_output, output.getvalue().strip())
 
     def test_destroy_invalid_class(self):
         correct = "** class doesn't exist **"
@@ -162,6 +126,46 @@ class TestConsole(unittest.TestCase):
             self.console.onecmd(f"show BaseModel {object_id}")
             self.assertIn(object_id, f.getvalue().strip())
 
+# ----------------------------------------------------------------
+    def test_create_object(self):
+
+        with patch("sys.stdout", new=StringIO()) as f:
+            HBNBCommand().onecmd("create BaseModel")
+            test_key = f"BaseModel.{f.getvalue().strip()}"
+            self.assertIn(test_key, models.storage.all().keys())
+
+    def test_show_missing_class(self):
+        """Test behavior when class name is missing."""
+        expected_output = "** class name missing **"
+
+        with patch("sys.stdout", new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd("show"))
+            self.assertEqual(expected_output, output.getvalue().strip())
+
+        with patch("sys.stdout", new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd(".show()"))
+            self.assertNotEqual(expected_output, output.getvalue().strip())
+
+    def test_show_invalid_class(self):
+        """Test behavior when class doesn't exist."""
+        expected_output = "** class doesn't exist **"
+
+        with patch("sys.stdout", new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd("show MyModel"))
+            self.assertEqual(expected_output, output.getvalue().strip())
+
+    def test_show_missing_id_space_notation(self):
+        """Test behavior when instance id is missing (space notation)."""
+        expected_output = "** instance id missing **"
+        model_classes = ["BaseModel", "User", "State",
+                         "City", "Amenity", "Place", "Review"]
+
+        for model_class in model_classes:
+            with patch("sys.stdout", new=StringIO()) as output:
+                self.assertFalse(HBNBCommand().onecmd(f"show {model_class}"))
+                self.assertEqual(expected_output, output.getvalue().strip())
+
+    
     def test_show_object_dot_notation(self):
         with patch("sys.stdout", new=StringIO()) as f:
             HBNBCommand().onecmd("create BaseModel")
