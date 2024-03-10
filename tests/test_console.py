@@ -183,6 +183,12 @@ class TestConsole(unittest.TestCase):
             self.console.onecmd(f"BaseModel.show({object_id})")
             self.assertIn("new_name", f.getvalue().strip())
 
+    def test_HBNBCommand_class_docstring(self):
+        self.assertIsNot(HBNBCommand.__doc__, None,
+                         "HBNBCommand class needs a docstring")
+        self.assertTrue(len(HBNBCommand.__doc__) >= 1,
+                        "HBNBCommand class needs a docstring")
+
 
 if __name__ == "__main__":
     unittest.main()
