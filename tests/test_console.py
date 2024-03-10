@@ -189,15 +189,11 @@ class TestConsole(unittest.TestCase):
             object_id = f.getvalue().strip()
 
         with patch("sys.stdout", new=StringIO()) as f:
-            self.console.onecmd(
-                    f"BaseModel.\
-                            update(\"{object_id}\", \"name\", \"new_name\")"
-                    )
+            cmnd = f"BaseModel.update(\"{object_id}\", \"name\", \"new_name\")"
+            self.console.onecmd(cmnd)
             self.console.onecmd(f"BaseModel.show({object_id})")
             self.assertIn("new_name", f.getvalue().strip())
-            HBNBCommand().onecmd(
-                    "destroy BaseModel 8c2045e3-0243-4920-bd87-23f56009b8a8"
-                    )
+            HBNBCommand().onecmd("destroy BaseModel f{object_id}")
 
 
 if __name__ == "__main__":
