@@ -14,6 +14,7 @@ class TestFileStorage(unittest.TestCase):
     def setUp(self):
         """Set up for testing"""
         self.storage = FileStorage()
+        setattr(FileStorage, "_FileStorage__objects", {})
 
     def tearDown(self):
         """Clean up after testing"""
