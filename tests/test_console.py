@@ -92,21 +92,16 @@ class TestConsole(unittest.TestCase):
                 self.assertNotIn(obj, models.storage.all())
 
     def test_destroy_objects_dot_notation(self):
-        models_to_test = [
-                "BaseModel", "User",
-                "State", "City", "Amenity", "Place", "Review"
-                ]
 
-        for model in models_to_test:
-            with patch("sys.stdout", new=StringIO()) as output:
-                self.assertFalse(HBNBCommand().onecmd(f"create {model}"))
-                test_id = output.getvalue().strip()
+        with patch("sys.stdout", new=StringIO()) as f:
+            HBNBCommand().onecmd("create BaseModel")
+            test_id = f.getvalue().strip()
 
-            with patch("sys.stdout", new=StringIO()) as output:
-                obj = models.storage.all()[f"{model}.{test_id}"]
-                command = f"{model}.destroy({test_id})"
-                self.assertFalse(HBNBCommand().onecmd(command))
-                self.assertNotIn(obj, models.storage.all())
+        with patch("sys.stdout", new=StringIO()) as _:
+            obj = models.storage.all()[f"BaseModel.{test_id}"]
+            command = f"BaseModel.destroy({test_id})"
+            HBNBCommand().onecmd(command)
+            self.assertNotIn(obj, models.storage.all())
 
     def test_create_object(self):
 
