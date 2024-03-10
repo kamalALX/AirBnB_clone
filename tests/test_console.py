@@ -109,16 +109,11 @@ class TestConsole(unittest.TestCase):
                 self.assertNotIn(obj, models.storage.all())
 
     def test_create_object(self):
-        models_to_test = [
-                "BaseModel", "User", "State",
-                "City", "Amenity", "Place", "Review"
-                ]
 
-        for model in models_to_test:
-            with patch("sys.stdout", new=StringIO()) as f:
-                HBNBCommand().onecmd("create BaseModel")
-                test_key = f"BaseModel.{f.getvalue().strip()}"
-                self.assertIn(test_key, models.storage.all().keys())
+        with patch("sys.stdout", new=StringIO()) as f:
+            HBNBCommand().onecmd("create BaseModel")
+            test_key = f"BaseModel.{f.getvalue().strip()}"
+            self.assertIn(test_key, models.storage.all().keys())
 
 
 if __name__ == "__main__":
