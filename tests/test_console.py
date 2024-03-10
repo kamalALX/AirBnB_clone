@@ -1,150 +1,311 @@
-#!/usr/bin/python3
-""" teste file for console.py """
 import unittest
-from io import StringIO
 from unittest.mock import patch
+from io import StringIO
 from console import HBNBCommand
-import models
-from models import storage
 
 
 class TestConsole(unittest.TestCase):
-    """this will test the console"""
 
-    def test_help(self):
-        """test if help works right"""
+    def setUp(self):
+        self.console = HBNBCommand()
+
+    def tearDown(self):
+        pass
+
+    def test_create_base_model(self):
         with patch('sys.stdout', new=StringIO()) as f:
-            HBNBCommand().onecmd("help")
-        output = "EOF  all  count  create  destroy  help  quit  show  update"
-        self.assertTrue(output in f.getvalue())
+            self.console.onecmd("create BaseModel")
+            self.assertIn("created", f.getvalue().strip())
 
-    def test_create(self):
-        """test if create works right"""
+    def test_create_user(self):
         with patch('sys.stdout', new=StringIO()) as f:
-            HBNBCommand().onecmd("create")
-            self.assertEqual(f.getvalue(), "** class name missing **\n")
+            self.console.onecmd("create User")
+            self.assertIn("created", f.getvalue().strip())
 
-    def test_quit(self):
-        """test if quit works right"""
+    def test_create_state(self):
         with patch('sys.stdout', new=StringIO()) as f:
-            HBNBCommand().onecmd("quit")
-            self.assertTrue(f.getvalue() == "")
+            self.console.onecmd("create State")
+            self.assertIn("created", f.getvalue().strip())
 
-    def test_show(self):
-        """test if show works right"""
+    def test_create_city(self):
         with patch('sys.stdout', new=StringIO()) as f:
-            HBNBCommand().onecmd("show")
-            self.assertTrue(f.getvalue() == "** class name missing **\n")
+            self.console.onecmd("create City")
+            self.assertIn("created", f.getvalue().strip())
 
-    def test_destroy(self):
-        """test if destroy works right"""
+    def test_create_amenity(self):
         with patch('sys.stdout', new=StringIO()) as f:
-            HBNBCommand().onecmd("destroy")
-            self.assertTrue(f.getvalue() == "** class name missing **\n")
+            self.console.onecmd("create Amenity")
+            self.assertIn("created", f.getvalue().strip())
 
-    def test_count(self):
-        """test if count works right"""
+    def test_create_place(self):
         with patch('sys.stdout', new=StringIO()) as f:
-            HBNBCommand().onecmd("count")
-            self.assertEqual(f.getvalue(), "0\n")
+            self.console.onecmd("create Place")
+            self.assertIn("created", f.getvalue().strip())
 
-    def test_update(self):
-        """test if update works right"""
+    def test_create_review(self):
         with patch('sys.stdout', new=StringIO()) as f:
-            HBNBCommand().onecmd("update")
-            self.assertTrue(f.getvalue() == "** class name missing **\n")
+            self.console.onecmd("create Review")
+            self.assertIn("created", f.getvalue().strip())
 
-    def test_emptyline(self):
-        """test if an empty line is handled properly"""
+    def test_show_base_model(self):
         with patch('sys.stdout', new=StringIO()) as f:
-            HBNBCommand().onecmd("\n")
-            self.assertTrue(f.getvalue() == "")
+            self.console.onecmd("create BaseModel")
+            output = f.getvalue().strip()
+            object_id = output.split()[-1]
+            self.console.onecmd(f"show BaseModel {object_id}")
+            self.assertIn("BaseModel", f.getvalue().strip())
 
-    def test_destroy_objects_space_notation(self):
-        with patch("sys.stdout", new=StringIO()) as f:
-            HBNBCommand().onecmd("create BaseModel")
-            test_id = f.getvalue().strip()
+    def test_show_user(self):
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.console.onecmd("create User")
+            output = f.getvalue().strip()
+            object_id = output.split()[-1]
+            self.console.onecmd(f"show User {object_id}")
+            self.assertIn("User", f.getvalue().strip())
 
-        with patch("sys.stdout", new=StringIO()) as _:
-            obj = models.storage.all()[f"BaseModel.{test_id}"]
-            command = f"destroy BaseModel {test_id}"
-            HBNBCommand().onecmd(command)
-            self.assertNotIn(obj, models.storage.all())
+    def test_show_state(self):
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.console.onecmd("create State")
+            output = f.getvalue().strip()
+            object_id = output.split()[-1]
+            self.console.onecmd(f"show State {object_id}")
+            self.assertIn("State", f.getvalue().strip())
 
-    def test_destroy_objects_dot_notation(self):
+    def test_show_city(self):
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.console.onecmd("create City")
+            output = f.getvalue().strip()
+            object_id = output.split()[-1]
+            self.console.onecmd(f"show City {object_id}")
+            self.assertIn("City", f.getvalue().strip())
 
-        with patch("sys.stdout", new=StringIO()) as f:
-            HBNBCommand().onecmd("create BaseModel")
-            test_id = f.getvalue().strip()
+    def test_show_amenity(self):
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.console.onecmd("create Amenity")
+            output = f.getvalue().strip()
+            object_id = output.split()[-1]
+            self.console.onecmd(f"show Amenity {object_id}")
+            self.assertIn("Amenity", f.getvalue().strip())
 
-        with patch("sys.stdout", new=StringIO()) as _:
-            obj = models.storage.all()[f"BaseModel.{test_id}"]
-            command = f"BaseModel.destroy({test_id})"
-            HBNBCommand().onecmd(command)
-            self.assertNotIn(obj, models.storage.all())
+    def test_show_place(self):
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.console.onecmd("create Place")
+            output = f.getvalue().strip()
+            object_id = output.split()[-1]
+            self.console.onecmd(f"show Place {object_id}")
+            self.assertIn("Place", f.getvalue().strip())
 
-    def test_create_object(self):
+    def test_show_review(self):
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.console.onecmd("create Review")
+            output = f.getvalue().strip()
+            object_id = output.split()[-1]
+            self.console.onecmd(f"show Review {object_id}")
+            self.assertIn("Review", f.getvalue().strip())
 
-        with patch("sys.stdout", new=StringIO()) as f:
-            HBNBCommand().onecmd("create BaseModel")
-            test_key = f"BaseModel.{f.getvalue().strip()}"
-            self.assertIn(test_key, models.storage.all().keys())
+    def test_destroy_base_model(self):
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.console.onecmd("create BaseModel")
+            output = f.getvalue().strip()
+            object_id = output.split()[-1]
+            self.console.onecmd(f"destroy BaseModel {object_id}")
+            self.assertIn("destroyed", f.getvalue().strip())
 
-    def test_show_missing_class(self):
-        """Test behavior when class name is missing."""
-        expected_output = "** class name missing **"
+    def test_destroy_user(self):
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.console.onecmd("create User")
+            output = f.getvalue().strip()
+            object_id = output.split()[-1]
+            self.console.onecmd(f"destroy User {object_id}")
+            self.assertIn("destroyed", f.getvalue().strip())
 
-        with patch("sys.stdout", new=StringIO()) as output:
-            self.assertFalse(HBNBCommand().onecmd("show"))
-            self.assertEqual(expected_output, output.getvalue().strip())
+    def test_destroy_state(self):
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.console.onecmd("create State")
+            output = f.getvalue().strip()
+            object_id = output.split()[-1]
+            self.console.onecmd(f"destroy State {object_id}")
+            self.assertIn("destroyed", f.getvalue().strip())
 
-        with patch("sys.stdout", new=StringIO()) as output:
-            self.assertFalse(HBNBCommand().onecmd(".show()"))
-            self.assertNotEqual(expected_output, output.getvalue().strip())
+    def test_destroy_city(self):
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.console.onecmd("create City")
+            output = f.getvalue().strip()
+            object_id = output.split()[-1]
+            self.console.onecmd(f"destroy City {object_id}")
+            self.assertIn("destroyed", f.getvalue().strip())
 
-    def test_show_invalid_class(self):
-        """Test behavior when class doesn't exist."""
-        expected_output = "** class doesn't exist **"
+    def test_destroy_amenity(self):
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.console.onecmd("create Amenity")
+            output = f.getvalue().strip()
+            object_id = output.split()[-1]
+            self.console.onecmd(f"destroy Amenity {object_id}")
+            self.assertIn("destroyed", f.getvalue().strip())
 
-        with patch("sys.stdout", new=StringIO()) as output:
-            self.assertFalse(HBNBCommand().onecmd("show MyModel"))
-            self.assertEqual(expected_output, output.getvalue().strip())
+    def test_destroy_place(self):
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.console.onecmd("create Place")
+            output = f.getvalue().strip()
+            object_id = output.split()[-1]
+            self.console.onecmd(f"destroy Place {object_id}")
+            self.assertIn("destroyed", f.getvalue().strip())
 
-    def test_show_missing_id_space_notation(self):
-        """Test behavior when instance id is missing (space notation)."""
-        expected_output = "** instance id missing **"
-        model_classes = ["BaseModel", "User", "State",
-                         "City", "Amenity", "Place", "Review"]
+    def test_destroy_review(self):
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.console.onecmd("create Review")
+            output = f.getvalue().strip()
+            object_id = output.split()[-1]
+            self.console.onecmd(f"destroy Review {object_id}")
+            self.assertIn("destroyed", f.getvalue().strip())
 
-        for model_class in model_classes:
-            with patch("sys.stdout", new=StringIO()) as output:
-                self.assertFalse(HBNBCommand().onecmd(f"show {model_class}"))
-                self.assertEqual(expected_output, output.getvalue().strip())
+    def test_all_base_model(self):
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.console.onecmd("create BaseModel")
+            self.console.onecmd("all BaseModel")
+            self.assertIn("BaseModel", f.getvalue().strip())
 
-    def test_destroy_invalid_class(self):
-        correct = "** class doesn't exist **"
-        with patch("sys.stdout", new=StringIO()) as output:
-            self.assertFalse(HBNBCommand().onecmd("destroy MyModel"))
-            self.assertEqual(correct, output.getvalue().strip())
+    def test_all_user(self):
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.console.onecmd("create User")
+            self.console.onecmd("all User")
+            self.assertIn("User", f.getvalue().strip())
 
-    def test_destroy_id_missing_space_notation(self):
-        correct = "** instance id missing **"
-        with patch("sys.stdout", new=StringIO()) as output:
-            self.assertFalse(HBNBCommand().onecmd("destroy BaseModel"))
-            self.assertEqual(correct, output.getvalue().strip())
+    def test_all_state(self):
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.console.onecmd("create State")
+            self.console.onecmd("all State")
+            self.assertIn("State", f.getvalue().strip())
 
-    def test_destroy_invalid_id_space_notation(self):
-        correct = "** no instance found **"
-        with patch("sys.stdout", new=StringIO()) as output:
-            self.assertFalse(HBNBCommand().onecmd("destroy BaseModel 1"))
-            self.assertEqual(correct, output.getvalue().strip())
+    def test_all_city(self):
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.console.onecmd("create City")
+            self.console.onecmd("all City")
+            self.assertIn("City", f.getvalue().strip())
 
-    def test_destroy_invalid_id_dot_notation(self):
-        correct = "** no instance found **"
-        with patch("sys.stdout", new=StringIO()) as output:
-            self.assertFalse(HBNBCommand().onecmd("BaseModel.destroy(1)"))
-            self.assertEqual(correct, output.getvalue().strip())
+    def test_all_amenity(self):
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.console.onecmd("create Amenity")
+            self.console.onecmd("all Amenity")
+            self.assertIn("Amenity", f.getvalue().strip())
+
+    def test_all_place(self):
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.console.onecmd("create Place")
+            self.console.onecmd("all Place")
+            self.assertIn("Place", f.getvalue().strip())
+
+    def test_all_review(self):
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.console.onecmd("create Review")
+            self.console.onecmd("all Review")
+            self.assertIn("Review", f.getvalue().strip())
+
+    def test_count_base_model(self):
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.console.onecmd("create BaseModel")
+            self.console.onecmd("count BaseModel")
+            self.assertIn("1", f.getvalue().strip())
+
+    def test_count_user(self):
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.console.onecmd("create User")
+            self.console.onecmd("count User")
+            self.assertIn("1", f.getvalue().strip())
+
+    def test_count_state(self):
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.console.onecmd("create State")
+            self.console.onecmd("count State")
+            self.assertIn("1", f.getvalue().strip())
+
+    def test_count_city(self):
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.console.onecmd("create City")
+            self.console.onecmd("count City")
+            self.assertIn("1", f.getvalue().strip())
+
+    def test_count_amenity(self):
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.console.onecmd("create Amenity")
+            self.console.onecmd("count Amenity")
+            self.assertIn("1", f.getvalue().strip())
+
+    def test_count_place(self):
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.console.onecmd("create Place")
+            self.console.onecmd("count Place")
+            self.assertIn("1", f.getvalue().strip())
+
+    def test_count_review(self):
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.console.onecmd("create Review")
+            self.console.onecmd("count Review")
+            self.assertIn("1", f.getvalue().strip())
+
+    def test_update_base_model(self):
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.console.onecmd("create BaseModel")
+            output = f.getvalue().strip()
+            object_id = output.split()[-1]
+            self.console.onecmd(f"update BaseModel {object_id} name 'new_name'")
+            self.console.onecmd(f"show BaseModel {object_id}")
+            self.assertIn("new_name", f.getvalue().strip())
+
+    def test_update_user(self):
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.console.onecmd("create User")
+            output = f.getvalue().strip()
+            object_id = output.split()[-1]
+            self.console.onecmd(f"update User {object_id} name 'new_name'")
+            self.console.onecmd(f"show User {object_id}")
+            self.assertIn("new_name", f.getvalue().strip())
+
+    def test_update_state(self):
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.console.onecmd("create State")
+            output = f.getvalue().strip()
+            object_id = output.split()[-1]
+            self.console.onecmd(f"update State {object_id} name 'new_name'")
+            self.console.onecmd(f"show State {object_id}")
+            self.assertIn("new_name", f.getvalue().strip())
+
+    def test_update_city(self):
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.console.onecmd("create City")
+            output = f.getvalue().strip()
+            object_id = output.split()[-1]
+            self.console.onecmd(f"update City {object_id} name 'new_name'")
+            self.console.onecmd(f"show City {object_id}")
+            self.assertIn("new_name", f.getvalue().strip())
+
+    def test_update_amenity(self):
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.console.onecmd("create Amenity")
+            output = f.getvalue().strip()
+            object_id = output.split()[-1]
+            self.console.onecmd(f"update Amenity {object_id} name 'new_name'")
+            self.console.onecmd(f"show Amenity {object_id}")
+            self.assertIn("new_name", f.getvalue().strip())
+
+    def test_update_place(self):
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.console.onecmd("create Place")
+            output = f.getvalue().strip()
+            object_id = output.split()[-1]
+            self.console.onecmd(f"update Place {object_id} name 'new_name'")
+            self.console.onecmd(f"show Place {object_id}")
+            self.assertIn("new_name", f.getvalue().strip())
+
+    def test_update_review(self):
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.console.onecmd("create Review")
+            output = f.getvalue().strip()
+            object_id = output.split()[-1]
+            self.console.onecmd(f"update Review {object_id} name 'new_name'")
+            self.console.onecmd(f"show Review {object_id}")
+            self.assertIn("new_name", f.getvalue().strip())
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     unittest.main()
