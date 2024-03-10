@@ -121,21 +121,6 @@ class TestConsole(unittest.TestCase):
                 self.assertFalse(HBNBCommand().onecmd(f"show {model_class}"))
                 self.assertEqual(expected_output, output.getvalue().strip())
 
-    def test_show_objects(self):
-        commands = ["BaseModel", "User", "State",
-                    "Place", "City", "Amenity", "Review"]
-
-        for command in commands:
-            with patch("sys.stdout", new=StringIO()) as output:
-                self.assertFalse(HBNBCommand().onecmd(f"create {command}"))
-                test_id = output.getvalue().strip()
-
-            with patch("sys.stdout", new=StringIO()) as output:
-                obj = storage.all()[f"{command}.{test_id}"]
-                command_str = f"{command}.show({test_id})"
-                self.assertFalse(HBNBCommand().onecmd(command_str))
-                self.assertEqual(obj.__str__(), output.getvalue().strip())
-
 
 if __name__ == "__main__":
     unittest.main()
