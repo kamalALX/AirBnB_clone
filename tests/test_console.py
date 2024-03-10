@@ -195,6 +195,28 @@ class TestConsole(unittest.TestCase):
             self.assertIn("new_name", f.getvalue().strip())
             HBNBCommand().onecmd("destroy BaseModel f{object_id}")
 
+    def test_update_id_missing_space_notation(self):
+        with patch("sys.stdout", new=StringIO()) as f:
+            HBNBCommand().onecmd("create BaseModel")
+            object_id = f.getvalue().strip()
+
+        with patch("sys.stdout", new=StringIO()) as f:
+            cmnd = "update BaseModel name \"new_name\""
+            self.console.onecmd(cmnd)
+            self.assertEqual("** no instance found **", f.getvalue().strip())
+            HBNBCommand().onecmd("destroy BaseModel f{object_id}")
+
+    def test_update_class_missing_space_notation(self):
+        with patch("sys.stdout", new=StringIO()) as f:
+            HBNBCommand().onecmd("create BaseModel")
+            object_id = f.getvalue().strip()
+
+        with patch("sys.stdout", new=StringIO()) as f:
+            cmnd = f"update {object_id} name \"new_name\""
+            self.console.onecmd(cmnd)
+            self.assertEqual("** class doesn't exist **", f.getvalue().strip())
+            HBNBCommand().onecmd("destroy BaseModel f{object_id}")
+
 
 if __name__ == "__main__":
     unittest.main()
