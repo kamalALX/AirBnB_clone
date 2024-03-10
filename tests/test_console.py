@@ -62,8 +62,6 @@ class TestConsole(unittest.TestCase):
             HBNBCommand().onecmd("\n")
             self.assertTrue(f.getvalue() == "")
 
-# testing Destroy -----------------------------------------------
-
     def test_destroy_objects_space_notation(self):
         with patch("sys.stdout", new=StringIO()) as f:
             HBNBCommand().onecmd("create BaseModel")
@@ -126,7 +124,6 @@ class TestConsole(unittest.TestCase):
             self.console.onecmd(f"show BaseModel {object_id}")
             self.assertIn(object_id, f.getvalue().strip())
 
-# ----------------------------------------------------------------
     def test_create_object(self):
 
         with patch("sys.stdout", new=StringIO()) as f:
@@ -165,7 +162,6 @@ class TestConsole(unittest.TestCase):
                 self.assertFalse(HBNBCommand().onecmd(f"show {model_class}"))
                 self.assertEqual(expected_output, output.getvalue().strip())
 
-    
     def test_show_object_dot_notation(self):
         with patch("sys.stdout", new=StringIO()) as f:
             HBNBCommand().onecmd("create BaseModel")
