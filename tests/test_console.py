@@ -9,13 +9,20 @@ from console import HBNBCommand
 class TestConsole(unittest.TestCase):
     """this will test the console"""
 
+    def test_help(self):
+        """test if help works right"""
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd("help")
+        output = "EOF  all  count  create  destroy  help  quit  show  update"
+        self.assertTrue(output in f.getvalue())
+
     def test_create(self):
         """test if create works right"""
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("create")
             self.assertEqual(f.getvalue(), "** class name missing **\n")
 
-    def test_add(self):
+    def test_quit(self):
         """test if quit works right"""
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("quit")
@@ -56,6 +63,11 @@ class TestConsole(unittest.TestCase):
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("\n")
             self.assertTrue(f.getvalue() == "")
+
+    def test_help_quit(self):
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd("help quit")
+            self.assertEqual(f.getvalue(), "Quit command to exit console\n")
 
 
 if __name__ == "__main__":
