@@ -5,26 +5,10 @@ from io import StringIO
 from unittest.mock import patch
 from console import HBNBCommand
 import models
-from models.base_model import BaseModel
-from models.user import User
-from models.engine.file_storage import FileStorage
-import os
 
 
 class TestConsole(unittest.TestCase):
     """this will test the console"""
-
-    def setUp(self):
-        """Set up"""
-        self.storage = FileStorage()
-        setattr(FileStorage, "_FileStorage__objects", {})
-
-    def tearDown(self):
-        """Clean up"""
-        try:
-            os.remove(FileStorage._FileStorage__file_path)
-        except FileNotFoundError:
-            pass
 
     def test_help(self):
         """test if help works right"""
