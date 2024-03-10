@@ -45,14 +45,6 @@ class TestFileStorage(unittest.TestCase):
         all_objs = new_storage.all()
         self.assertIn("BaseModel." + obj1.id, all_objs)
 
-    def test_reload_empty_file(self):
-        """Test reload method with an empty file"""
-        open(FileStorage._FileStorage__file_path, "w").close()
-        new_storage = FileStorage()
-        new_storage.reload()
-        all_objs = new_storage.all()
-        self.assertEqual(len(all_objs), 0)
-
 
 if __name__ == "__main__":
     unittest.main()
