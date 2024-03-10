@@ -45,9 +45,11 @@ class FileStorage():
             json.dump(formatted_dictionary, fileJSON)
 
     def reload(self):
-        """ loads from file.json into objects """
+        """
+        loads from file.json into objects
+        FileStorage.__objects.clear()
+        """
         try:
-            FileStorage.__objects.clear()
             new__objects = {}
             with open(FileStorage.__file_path, "r") as fileJSON:
                 new__objects = json.load(fileJSON)
