@@ -50,7 +50,7 @@ class TestConsole(unittest.TestCase):
         """test if count works right"""
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("count")
-            self.assertTrue(f.getvalue() != "")
+            self.assertEqual(f.getvalue(), "0\n")
 
     def test_update(self):
         """test if update works right"""
