@@ -89,6 +89,19 @@ class TestConsole(unittest.TestCase):
             test_key = f"BaseModel.{f.getvalue().strip()}"
             self.assertIn(test_key, models.storage.all().keys())
 
+    def test_create_object2(self):
+        model_classes = [
+                "BaseModel", "User", "State",
+                "City", "Amenity", "Place", "Review"]
+
+        for model_class in model_classes:
+            with patch("sys.stdout", new=StringIO()) as output:
+                self.assertFalse(HBNBCommand().onecmd(f"create {model_class}"))
+                created_id = output.getvalue().strip()
+                self.assertLess(0, len(created_id))
+                test_key = f"{model_class}.{created_id}"
+                self.assertIn(test_key, models.storage.all().keys())
+
 
 if __name__ == "__main__":
     unittest.main()
