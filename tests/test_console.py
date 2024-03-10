@@ -217,6 +217,52 @@ class TestConsole(unittest.TestCase):
             self.assertEqual("** class doesn't exist **", f.getvalue().strip())
             HBNBCommand().onecmd("destroy BaseModel f{object_id}")
 
+    def test_update_attribute_value_missing_space_notation(self):
+        with patch("sys.stdout", new=StringIO()) as f:
+            HBNBCommand().onecmd("create BaseModel")
+            object_id = f.getvalue().strip()
+
+        with patch("sys.stdout", new=StringIO()) as f:
+            cmnd = f"update BaseModel {object_id} \"new_name\""
+            self.console.onecmd(cmnd)
+            self.assertEqual("** value missing **", f.getvalue().strip())
+            HBNBCommand().onecmd("destroy BaseModel f{object_id}")
+
+    def test_update_attribute_missing_space_notation(self):
+        with patch("sys.stdout", new=StringIO()) as f:
+            HBNBCommand().onecmd("create BaseModel")
+            object_id = f.getvalue().strip()
+
+        with patch("sys.stdout", new=StringIO()) as f:
+            cmnd = f"update BaseModel {object_id}"
+            self.console.onecmd(cmnd)
+            output = "** attribute name missing **"
+            self.assertEqual(output, f.getvalue().strip())
+            HBNBCommand().onecmd("destroy BaseModel f{object_id}")
+
+    def test_update_instance_not_found_space_notation(self):
+        with patch("sys.stdout", new=StringIO()) as f:
+            HBNBCommand().onecmd("create BaseModel")
+
+        with patch("sys.stdout", new=StringIO()) as f:
+            cmnd = "update BaseModel ffl45ge5w555w name \"value\""
+            self.console.onecmd(cmnd)
+            output = "** no instance found **"
+            self.assertEqual(output, f.getvalue().strip())
+            HBNBCommand().onecmd("destroy BaseModel f{object_id}")
+
+    def test_update_class_not_found_space_notation(self):
+        with patch("sys.stdout", new=StringIO()) as f:
+            HBNBCommand().onecmd("create BaseModel")
+            object_id = f.getvalue().strip()
+
+        with patch("sys.stdout", new=StringIO()) as f:
+            cmnd = f"update home {object_id} name \"value\""
+            self.console.onecmd(cmnd)
+            output = "** class doesn't exist **"
+            self.assertEqual(output, f.getvalue().strip())
+            HBNBCommand().onecmd("destroy BaseModel f{object_id}")
+
 
 if __name__ == "__main__":
     unittest.main()
