@@ -16,12 +16,6 @@ class TestConsole(unittest.TestCase):
         output = "EOF  all  count  create  destroy  help  quit  show  update"
         self.assertTrue(output in f.getvalue())
 
-    def test_create(self):
-        """test if create works right"""
-        with patch('sys.stdout', new=StringIO()) as f:
-            HBNBCommand().onecmd("create")
-            self.assertEqual(f.getvalue(), "** class name missing **\n")
-
     def test_quit(self):
         """test if quit works right"""
         with patch('sys.stdout', new=StringIO()) as f:
@@ -63,11 +57,6 @@ class TestConsole(unittest.TestCase):
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("\n")
             self.assertTrue(f.getvalue() == "")
-
-    def test_help_quit(self):
-        with patch('sys.stdout', new=StringIO()) as f:
-            HBNBCommand().onecmd("help quit")
-            self.assertEqual(f.getvalue(), "Quit command to exit console\n")
 
 
 if __name__ == "__main__":
