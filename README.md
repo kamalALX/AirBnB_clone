@@ -1,4 +1,4 @@
-![Alt Text](https://i.imgur.com/ogbfW3k.png)
+![Alt Text](https://raw.githubusercontent.com/sefeiba/AirBnB_clone/main/AirBnB_clone.png)
 
 # AirBnB Clone Project
 
