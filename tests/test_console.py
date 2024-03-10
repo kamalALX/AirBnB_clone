@@ -11,10 +11,12 @@ class TestConsole(unittest.TestCase):
 
     def test_help(self):
         """test if help works right"""
+        output = ("Documented commands (type help <topic>):\n"
+                  "========================================\n"
+                  "EOF  all  count  create  destroy  help  quit  show  update")
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("help")
-        output = "EOF  all  count  create  destroy  help  quit  show  update"
-        self.assertTrue(output in f.getvalue())
+            self.assertEqual(output, f.getvalue().strip())
 
     def test_create(self):
         """test if create works right"""
