@@ -145,6 +145,44 @@ class TestConsole(unittest.TestCase):
             self.assertFalse(HBNBCommand().onecmd("BaseModel.destroy(1)"))
             self.assertEqual(correct, output.getvalue().strip())
 
+    def test_show_object_space_notation(self):
+        with patch("sys.stdout", new=StringIO()) as f:
+            HBNBCommand().onecmd("create BaseModel")
+            object_id = f.getvalue().strip()
+
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.console.onecmd(f"show BaseModel {object_id}")
+            self.assertIn(object_id, f.getvalue().strip())
+
+    def test_show_object_dot_notation(self):
+        with patch("sys.stdout", new=StringIO()) as f:
+            HBNBCommand().onecmd("create BaseModel")
+            object_id = f.getvalue().strip()
+
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.console.onecmd(f"BaseModel.show({object_id})")
+            self.assertIn(object_id, f.getvalue().strip())
+
+    def test_update_object_space_notation(self):
+        with patch("sys.stdout", new=StringIO()) as f:
+            HBNBCommand().onecmd("create BaseModel")
+            object_id = f.getvalue().strip()
+
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.console.onecmd(f"update BaseModel {object_id} name 'new_name'")
+            self.console.onecmd(f"show BaseModel {object_id}")
+            self.assertIn("new_name", f.getvalue().strip())
+
+    def test_update_object_dot_notation(self):
+        with patch("sys.stdout", new=StringIO()) as f:
+            HBNBCommand().onecmd("create BaseModel")
+            object_id = f.getvalue().strip()
+
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.console.onecmd(f"BaseModel.update({object_id}, name='new_name')")
+            self.console.onecmd(f"BaseModel.show({object_id})")
+            self.assertIn("new_name", f.getvalue().strip())
+
 
 if __name__ == "__main__":
     unittest.main()
