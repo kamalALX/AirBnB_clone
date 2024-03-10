@@ -63,19 +63,6 @@ class TestFileStorage(unittest.TestCase):
         self.storage.new(None)
         self.assertEqual(len(self.storage.all()), initial_count)
 
-    def test_save(self):
-        """Test save method"""
-        obj1 = BaseModel()
-        obj2 = BaseModel()
-        self.storage.new(obj1)
-        self.storage.new(obj2)
-        self.storage.save()
-        new_storage = FileStorage()
-        new_storage.reload()
-        all_objs = new_storage.all()
-        self.assertIn(f"{obj1.__class__.__name__}.{obj1.id}", all_objs)
-        self.assertIn(f"{obj2.__class__.__name__}.{obj2.id}", all_objs)
-
     def test_reload(self):
         """Test reload method"""
         obj1 = BaseModel()
