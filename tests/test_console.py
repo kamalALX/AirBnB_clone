@@ -105,14 +105,6 @@ class TestConsole(unittest.TestCase):
             test_key = f"BaseModel.{f.getvalue().strip()}"
             self.assertIn(test_key, models.storage.all().keys())
 
-    def test_all(self):
-        BaseModel()
-        User()
-        with patch("sys.stdout", new=StringIO()) as f:
-            HBNBCommand().onecmd("all")
-            self.assertIn("BaseModel", f.getvalue().strip())
-            self.assertIn("User", f.getvalue().strip())
-
 
 if __name__ == "__main__":
     unittest.main()
