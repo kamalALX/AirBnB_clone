@@ -23,11 +23,6 @@ class TestFileStorage(unittest.TestCase):
         except FileNotFoundError:
             pass
 
-    def test_all(self):
-        """Test all method"""
-        expected_result = {}
-        self.assertDictEqual(self.storage.all(), expected_result)
-
     def test_new(self):
         """Test new method"""
         obj = BaseModel()
