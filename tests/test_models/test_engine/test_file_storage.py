@@ -87,6 +87,7 @@ class TestFileStorage(unittest.TestCase):
 
     def test_reload_nonexistent_file(self):
         """Test reload method with a nonexistent file"""
+        self.storage.all().clear()
         try:
             os.remove(FileStorage._FileStorage__file_path)
         except Exception:
@@ -99,6 +100,7 @@ class TestFileStorage(unittest.TestCase):
 
     def test_reload_empty_file(self):
         """Test reload method with an empty file"""
+        self.storage.all().clear()
         open(FileStorage._FileStorage__file_path, "w").close()
         new_storage = FileStorage()
         new_storage.reload()
@@ -108,6 +110,7 @@ class TestFileStorage(unittest.TestCase):
     def test_reload_nonexistent_file2(self):
         """Test reload method with a nonexistent file"""
         self.storage.save()
+        self.storage.all().clear()
         os.remove(FileStorage._FileStorage__file_path)
         new_storage = FileStorage()
         new_storage.reload()
