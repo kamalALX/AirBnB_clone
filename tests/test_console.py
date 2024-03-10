@@ -272,28 +272,29 @@ class TestConsole(unittest.TestCase):
 
 
 class TestHBNBCommand_count(unittest.TestCase):
-    """Unittests for testing count method of HBNB comand interpreter."""
+    """Unittests to verify the functionality of the count command in the HBNB command-line interpreter."""
 
     @classmethod
-    def setUp(self):
+    def setUpClass(cls):
         try:
-            os.rename("file.json", "tmp")
-        except IOError:
+            os.rename("file.json", "backup_file.json")
+        except FileNotFoundError:
             pass
-        FileStorage._FileStorage__objects = {}
+        HBNBCommand.storage._FileStorage__objects = {}
 
     @classmethod
-    def tearDown(self):
+    def tearDownClass(cls):
         try:
             os.remove("file.json")
-        except IOError:
+        except FileNotFoundError:
             pass
         try:
-            os.rename("tmp", "file.json")
-        except IOError:
+            os.rename("backup_file.json", "file.json")
+        except FileNotFoundError:
             pass
 
     def test_count_object(self):
+        """Test counting objects after creating instances of various classes."""
         with patch("sys.stdout", new=StringIO()) as output:
             self.assertFalse(HBNBCommand().onecmd("create BaseModel"))
         with patch("sys.stdout", new=StringIO()) as output:
