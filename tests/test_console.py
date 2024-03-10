@@ -6,10 +6,13 @@ from unittest.mock import patch
 from console import HBNBCommand
 import models
 from models import storage
+import console
 
 
 class TestConsole(unittest.TestCase):
     """this will test the console"""
+
+    console = console.HBNBCommand()
 
     def test_help(self):
         """test if help works right"""
@@ -179,9 +182,10 @@ class TestConsole(unittest.TestCase):
             object_id = f.getvalue().strip()
 
         with patch("sys.stdout", new=StringIO()) as f:
-            self.console.onecmd(f"BaseModel.update({object_id}, name='new_name')")
+            self.console.onecmd(f"BaseModel.update(\"{object_id}\", \"name\", \"new_name\")")
             self.console.onecmd(f"BaseModel.show({object_id})")
             self.assertIn("new_name", f.getvalue().strip())
+            HBNBCommand().onecmd("destroy BaseModel 8c2045e3-0243-4920-bd87-23f56009b8a8")
 
 
 if __name__ == "__main__":

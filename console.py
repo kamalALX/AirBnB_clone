@@ -193,8 +193,7 @@ class HBNBCommand(cmd.Cmd):
                         else:
                             str2_ = f"{class_} {uuid_} {key_} \"{value_}\""
                             self.do_update(str2_)
-        except (IndexError, json.decoder.JSONDecodeError,
-                TypeError, AttributeError):
+        except Exception:
             pass
 
     def do_EOF(self, line):
