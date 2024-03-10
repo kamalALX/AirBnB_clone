@@ -263,6 +263,11 @@ class TestConsole(unittest.TestCase):
             self.assertEqual(output, f.getvalue().strip())
             HBNBCommand().onecmd("destroy BaseModel f{object_id}")
 
+    def test_count_class_dont_exist(self):
+        with patch("sys.stdout", new=StringIO()) as f:
+            HBNBCommand().onecmd("count country")
+            self.assertEqual("** class doesn't exist **", f.getvalue().strip())
+
 
 if __name__ == "__main__":
     unittest.main()
