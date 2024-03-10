@@ -272,7 +272,10 @@ class TestConsole(unittest.TestCase):
 
 
 class TestHBNBCommand_count(unittest.TestCase):
-    """Unittests to verify the functionality of the count command in the HBNB command-line interpreter."""
+    """
+    Unittests to verify the functionality of the count command in the
+    HBNB command-line interpreter.
+    """
 
     @classmethod
     def setUpClass(cls):
@@ -294,7 +297,9 @@ class TestHBNBCommand_count(unittest.TestCase):
             pass
 
     def test_count_object(self):
-        """Test counting objects after creating instances of various classes."""
+        """
+        Test counting objects after creating instances of various classes.
+        """
         with patch("sys.stdout", new=StringIO()) as output:
             self.assertFalse(HBNBCommand().onecmd("create BaseModel"))
         with patch("sys.stdout", new=StringIO()) as output:
