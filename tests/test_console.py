@@ -66,8 +66,8 @@ class TestConsole(unittest.TestCase):
 
     def test_upd(self):
         with patch('sys.stdout', new=StringIO()) as f:
-            HBNBCommand().onecmd("help update")
-            self.assertTrue(f.getvalue() == "update object attributes\n")
+            HBNBCommand().onecmd("help quit")
+            self.assertEqual(f.getvalue(), "Quit command to exit console\n")
 
 
 if __name__ == "__main__":
