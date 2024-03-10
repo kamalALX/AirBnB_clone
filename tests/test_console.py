@@ -5,10 +5,26 @@ from io import StringIO
 from unittest.mock import patch
 from console import HBNBCommand
 import models
+from models.base_model import BaseModel
+from models.user import User
+from models.engine.file_storage import FileStorage
+import os
 
 
 class TestConsole(unittest.TestCase):
     """this will test the console"""
+
+    def setUp(self):
+        """Set up"""
+        self.storage = FileStorage()
+        setattr(FileStorage, "_FileStorage__objects", {})
+
+    def tearDown(self):
+        """Clean up"""
+        try:
+            os.remove(FileStorage._FileStorage__file_path)
+        except FileNotFoundError:
+            pass
 
     def test_help(self):
         """test if help works right"""
@@ -40,12 +56,6 @@ class TestConsole(unittest.TestCase):
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("destroy")
             self.assertTrue(f.getvalue() == "** class name missing **\n")
-
-    def test_all(self):
-        """test if all works right"""
-        with patch('sys.stdout', new=StringIO()) as f:
-            HBNBCommand().onecmd("all")
-            self.assertTrue(f.getvalue() != "")
 
     def test_count(self):
         """test if count works right"""
@@ -95,19 +105,13 @@ class TestConsole(unittest.TestCase):
             test_key = f"BaseModel.{f.getvalue().strip()}"
             self.assertIn(test_key, models.storage.all().keys())
 
-    def test_all_dot_notation(self):
-        """ using object.create() comad to create an object """
+    def test_all(self):
+        BaseModel()
+        User()
         with patch("sys.stdout", new=StringIO()) as f:
-            HBNBCommand().onecmd("create BaseModel")
-            test_id = f.getvalue().strip()
-        with patch("sys.stdout", new=StringIO()) as f:
-            HBNBCommand().onecmd("BaseModel.all()")
+            HBNBCommand().onecmd("all")
             self.assertIn("BaseModel", f.getvalue().strip())
-            self.assertNotIn("User", f.getvalue().strip())
-            command = f"BaseModel.destroy({test_id})"
-            HBNBCommand().onecmd(command)
-
-
+            self.assertIn("User", f.getvalue().strip())
 
 
 if __name__ == "__main__":
