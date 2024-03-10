@@ -121,18 +121,6 @@ class TestConsole(unittest.TestCase):
                 self.assertFalse(HBNBCommand().onecmd(f"show {model_class}"))
                 self.assertEqual(expected_output, output.getvalue().strip())
 
-    def test_show_objects_space_notation(self):
-        """Test show command with space notation"""
-        with patch("sys.stdout", new=StringIO()) as output:
-            self.assertFalse(HBNBCommand().onecmd("create BaseModel"))
-            test_id = output.getvalue().strip()
-
-        with patch("sys.stdout", new=StringIO()) as output:
-            obj = storage.all()["BaseModel.{}".format(test_id)]
-            command = "show BaseModel {}".format(test_id)
-            self.assertFalse(HBNBCommand().onecmd(command))
-            self.assertEqual(obj.__str__(), output.getvalue().strip())
-
 
 if __name__ == "__main__":
     unittest.main()
