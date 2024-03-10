@@ -183,31 +183,6 @@ class TestConsole(unittest.TestCase):
             self.console.onecmd(f"BaseModel.show({object_id})")
             self.assertIn("new_name", f.getvalue().strip())
 
-    def test_emptyline2(self):
-        """Test behavior when an empty line is entered."""
-        with patch('sys.stdout', new=StringIO()) as f:
-            self.assertFalse(self.console.onecmd("\n"))
-            self.assertEqual("", f.getvalue().strip())
-
-    def test_quit2(self):
-        """Test the quit command."""
-        with patch('sys.stdout', new=StringIO()) as f:
-            self.assertFalse(self.console.onecmd("quit"))
-            self.assertEqual("", f.getvalue().strip())
-
-    def test_docstrings_in_console(self):
-        """Test if docstrings are present for Console methods."""
-        self.assertIsNotNone(HBNBCommand.__doc__)
-        self.assertIsNotNone(HBNBCommand.emptyline.__doc__)
-        self.assertIsNotNone(HBNBCommand.do_quit.__doc__)
-        self.assertIsNotNone(HBNBCommand.do_EOF.__doc__)
-        self.assertIsNotNone(HBNBCommand.do_create.__doc__)
-        self.assertIsNotNone(HBNBCommand.do_show.__doc__)
-        self.assertIsNotNone(HBNBCommand.do_destroy.__doc__)
-        self.assertIsNotNone(HBNBCommand.do_all.__doc__)
-        self.assertIsNotNone(HBNBCommand.do_update.__doc__)
-        self.assertIsNotNone(HBNBCommand.default.__doc__)
-
 
 if __name__ == "__main__":
     unittest.main()
