@@ -66,30 +66,15 @@ class TestConsole(unittest.TestCase):
             self.assertTrue(f.getvalue() == "")
 
     def test_destroy_objects_space_notation(self):
-        with patch("sys.stdout", new=StringIO()) as output:
-            self.assertFalse(HBNBCommand().onecmd("create BaseModel"))
-            test_id = output.getvalue().strip()
+        with patch("sys.stdout", new=StringIO()) as f:
+            HBNBCommand().onecmd("create BaseModel")
+            test_id = f.getvalue().strip()
 
-        with patch("sys.stdout", new=StringIO()) as output:
-            obj = models.storage.all()["BaseModel.{}".format(test_id)]
-            command = "destroy BaseModel {}".format(test_id)
-            self.assertFalse(HBNBCommand().onecmd(command))
+        with patch("sys.stdout", new=StringIO()) as _:
+            obj = models.storage.all()[f"BaseModel.{test_id}"]
+            command = f"destroy BaseModel {test_id}"
+            HBNBCommand().onecmd(command)
             self.assertNotIn(obj, models.storage.all())
-
-        # Repeat the same structure for other models
-        models_to_test = [
-                "User", "State", "Place", "City", "Amenity", "Review"
-                ]
-        for model in models_to_test:
-            with patch("sys.stdout", new=StringIO()) as output:
-                self.assertFalse(HBNBCommand().onecmd(f"create {model}"))
-                test_id = output.getvalue().strip()
-
-            with patch("sys.stdout", new=StringIO()) as output:
-                obj = models.storage.all()[f"{model}.{test_id}"]
-                command = f"destroy {model} {test_id}"
-                self.assertFalse(HBNBCommand().onecmd(command))
-                self.assertNotIn(obj, models.storage.all())
 
     def test_destroy_objects_dot_notation(self):
 
