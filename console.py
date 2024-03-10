@@ -127,7 +127,7 @@ class HBNBCommand(cmd.Cmd):
             print(count_)
 
     def do_update(self, line):
-        """ update tne object """
+        """update object attributes"""
         comand = line.split()
         ln = len(comand)
         if ln > 4:

@@ -66,8 +66,8 @@ class TestConsole(unittest.TestCase):
 
     def test_upd(self):
         with patch('sys.stdout', new=StringIO()) as f:
-            HBNBCommand().onecmd("update User")
-            self.assertTrue(f.getvalue() == "** instance id missing **\n")
+            HBNBCommand().onecmd("help update")
+            self.assertTrue(f.getvalue() == "update object attributes\n")
 
 
 if __name__ == "__main__":
