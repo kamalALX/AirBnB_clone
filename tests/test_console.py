@@ -98,8 +98,16 @@ class TestConsole(unittest.TestCase):
     def test_all_dot_notation(self):
         """ using object.create() comad to create an object """
         with patch("sys.stdout", new=StringIO()) as f:
+            HBNBCommand().onecmd("create BaseModel")
+            test_id = f.getvalue().strip()
+        with patch("sys.stdout", new=StringIO()) as f:
             HBNBCommand().onecmd("BaseModel.all()")
-            self.assertIn("[]", f.getvalue())
+            self.assertIn("BaseModel", f.getvalue().strip())
+            self.assertNotIn("User", f.getvalue().strip())
+            command = f"BaseModel.destroy({test_id})"
+            HBNBCommand().onecmd(command)
+
+
 
 
 if __name__ == "__main__":
