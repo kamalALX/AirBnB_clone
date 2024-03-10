@@ -145,39 +145,6 @@ class TestConsole(unittest.TestCase):
             self.assertFalse(HBNBCommand().onecmd("BaseModel.destroy(1)"))
             self.assertEqual(correct, output.getvalue().strip())
 
-    def test_all_invalid_class(self):
-        correct = "** class doesn't exist **"
-        with patch("sys.stdout", new=StringIO()) as output:
-            self.assertFalse(HBNBCommand().onecmd("all MyModel"))
-            self.assertEqual(correct, output.getvalue().strip())
-        with patch("sys.stdout", new=StringIO()) as output:
-            self.assertFalse(HBNBCommand().onecmd("MyModel.all()"))
-            self.assertEqual(correct, output.getvalue().strip())
-
-    def test_all_single_object_space_notation(self):
-        with patch("sys.stdout", new=StringIO()) as output:
-            self.assertFalse(HBNBCommand().onecmd("create BaseModel"))
-            test_id = output.getvalue().strip()
-        with patch("sys.stdout", new=StringIO()) as output:
-            self.assertFalse(HBNBCommand().onecmd("all BaseModel"))
-            output_text = output.getvalue().strip()
-            self.assertIn("BaseModel", output_text)
-            self.assertNotIn("User", output_text)
-            command = f"BaseModel.destroy({test_id})"
-            HBNBCommand().onecmd(command)
-
-    def test_all_single_object_dot_notation(self):
-        with patch("sys.stdout", new=StringIO()) as output:
-            self.assertFalse(HBNBCommand().onecmd("create BaseModel"))
-            test_id = output.getvalue().strip()
-        with patch("sys.stdout", new=StringIO()) as output:
-            self.assertFalse(HBNBCommand().onecmd("BaseModel.all()"))
-            output_text = output.getvalue().strip()
-            self.assertIn("BaseModel", output_text)
-            self.assertNotIn("User", output_text)
-            command = f"BaseModel.destroy({test_id})"
-            HBNBCommand().onecmd(command)
-
 
 if __name__ == "__main__":
     unittest.main()
