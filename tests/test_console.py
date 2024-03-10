@@ -269,5 +269,21 @@ class TestConsole(unittest.TestCase):
             self.assertEqual("** class doesn't exist **", f.getvalue().strip())
 
 
+class TestHBNBCommand_exit(unittest.TestCase):
+    """Unittests for testing exiting from the HBNB command interpreter."""
+
+    def test_quit_exits(self):
+        expected_output = ""
+        with patch("sys.stdout", new=StringIO()) as output:
+            HBNBCommand().onecmd("quit")
+            self.assertEqual(expected_output, output.getvalue())
+
+    def test_EOF_exits(self):
+        expected_output = "\n"  # Update expected output to include newline character
+        with patch("sys.stdout", new=StringIO()) as output:
+            HBNBCommand().onecmd("EOF")
+            self.assertEqual(expected_output, output.getvalue())
+
+
 if __name__ == "__main__":
     unittest.main()
