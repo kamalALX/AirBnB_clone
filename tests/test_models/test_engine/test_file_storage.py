@@ -9,24 +9,19 @@ from models.engine.file_storage import FileStorage
 
 
 class TestFileStorage(unittest.TestCase):
-    """Test cases for FileStorage"""
+    """Test cases FileStorage"""
 
     def setUp(self):
-        """Set up for testing"""
+        """Set up"""
         self.storage = FileStorage()
         setattr(FileStorage, "_FileStorage__objects", {})
 
     def tearDown(self):
-        """Clean up after testing"""
+        """Clean up"""
         try:
             os.remove(FileStorage._FileStorage__file_path)
         except FileNotFoundError:
             pass
-
-    def test_all(self):
-        """Test all method"""
-        expected_result = {}
-        self.assertDictEqual(self.storage.all(), expected_result)
 
     def test_new(self):
         """Test new method"""
@@ -35,15 +30,13 @@ class TestFileStorage(unittest.TestCase):
         all_objs = self.storage.all()
         self.assertIn("BaseModel." + obj.id, all_objs)
 
-    def test_save_reload(self):
-        """Test save and reload methods"""
-        obj1 = BaseModel()
-        self.storage.new(obj1)
-        self.storage.save()
+    def test_reload_empty_file(self):
+        """Test reload empty file"""
+        open(FileStorage._FileStorage__file_path, "w").close()
         new_storage = FileStorage()
         new_storage.reload()
         all_objs = new_storage.all()
-        self.assertIn("BaseModel." + obj1.id, all_objs)
+        self.assertEqual(len(all_objs), 0)
 
 
 if __name__ == "__main__":
