@@ -47,7 +47,7 @@ class FileStorage():
     def reload(self):
         """ loads from file.json into objects """
         try:
-            FileStorage.__objects = {}
+            FileStorage.__objects.clear()
             new__objects = {}
             with open(FileStorage.__file_path, "r") as fileJSON:
                 new__objects = json.load(fileJSON)
