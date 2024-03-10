@@ -58,15 +58,16 @@ class TestConsole(unittest.TestCase):
             HBNBCommand().onecmd("update")
             self.assertTrue(f.getvalue() == "** class name missing **\n")
 
-        with patch('sys.stdout', new=StringIO()) as f:
-            HBNBCommand().onecmd("update User")
-            self.assertTrue(f.getvalue() == "** instance id missing **\n")
-
     def test_emptyline(self):
         """test if an empty line is handled properly"""
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("\n")
             self.assertTrue(f.getvalue() == "")
+
+    def test_upd(self):
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd("update User")
+            self.assertTrue(f.getvalue() == "** instance id missing **\n")
 
 
 if __name__ == "__main__":
