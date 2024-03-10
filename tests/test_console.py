@@ -136,6 +136,12 @@ class TestConsole(unittest.TestCase):
             self.assertFalse(HBNBCommand().onecmd("destroy BaseModel"))
             self.assertEqual(correct, output.getvalue().strip())
 
+    def test_destroy_id_missing_dot_notatiion(self):
+        correct = ""
+        with patch("sys.stdout", new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd("BaseModel.destroy()"))
+            self.assertEqual(correct, output.getvalue().strip())
+
     def test_destroy_invalid_id_space_notation(self):
         correct = "** no instance found **"
         with patch("sys.stdout", new=StringIO()) as output:
