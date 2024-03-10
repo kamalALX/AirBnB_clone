@@ -95,6 +95,12 @@ class TestConsole(unittest.TestCase):
             test_key = f"BaseModel.{f.getvalue().strip()}"
             self.assertIn(test_key, models.storage.all().keys())
 
+    def test_all_dot_notation(self):
+        """ using object.create() comad to create an object """
+        with patch("sys.stdout", new=StringIO()) as f:
+            HBNBCommand().onecmd("BaseModel.all()")
+            self.assertIn("[]", f.getvalue())
+
 
 if __name__ == "__main__":
     unittest.main()
