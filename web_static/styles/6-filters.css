@@ -7,7 +7,7 @@
 	border-radius: 4px;
 }
 
-.locations {
+.filters .locations {
 	display: inline;
 	vertical-align: middle;
 	float: left;
@@ -18,7 +18,7 @@
 	border-right: 1px solid #DDDDDD;
 }
 
-.amenities {
+.filters .amenities {
 	display: inline;
 	vertical-align: middle;
 	height: 100%;
@@ -57,7 +57,7 @@ ul {
 	padding-bottom: 20px;
 }	
 
-h2 {
+.popover h2 {
 	font-size: 16px;
 	padding-left: 30px;
 	margin: 0px;

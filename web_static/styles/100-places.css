@@ -93,3 +93,35 @@
 {
     text-align: left;
 }
+.amenities li
+{
+    display: flex;
+    align-items: center;
+}
+
+.wrapper .amenities h2
+{
+    text-align: left;
+}
+.places .amenities  li .pet-friendly{
+    content: url(../images/icon_pets.png);
+    width: 29px;
+    height: auto;
+    margin-right: 15px;
+}
+
+.tv{
+    content: url(/images/icon_tv.png);
+    width: 29px;
+    height: auto;
+    margin-right: 15px;
+    margin-top: 10px;
+}
+
+.wifi{
+    content: url(/images/icon_wifi.png);
+    width: 29px;
+    height: auto;
+    margin-right: 15px;
+    margin-top: 10px;
+}
