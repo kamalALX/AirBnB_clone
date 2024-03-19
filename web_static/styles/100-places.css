@@ -111,7 +111,7 @@
 }
 
 .tv{
-    content: url(/images/icon_tv.png);
+    content: url(../images/icon_tv.png);
     width: 29px;
     height: auto;
     margin-right: 15px;
@@ -119,7 +119,7 @@
 }
 
 .wifi{
-    content: url(/images/icon_wifi.png);
+    content: url(../images/icon_wifi.png);
     width: 29px;
     height: auto;
     margin-right: 15px;
