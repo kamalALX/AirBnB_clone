@@ -6,7 +6,10 @@
 	border: 1px solid #DDDDDD;
 	border-radius: 4px;
 }
-
+.filters .amenities ul
+{
+	padding-top: 20px;
+}
 .filters .locations {
 	display: inline;
 	vertical-align: middle;
@@ -41,8 +44,8 @@
 
 	border: 1px solid #DDDDDD;
 	border-radius: 4px;
+	z-index: 1;
 }
-
 .locations:hover .popover {
 	display: inline-block;
 }
@@ -51,26 +54,28 @@
 	display: inline-block;
 }
 
-ul {
+.filters ul
+{
 	list-style-type: none;
 	padding: 0px;
-	padding-bottom: 20px;
+	padding-bottom: 10px;
 }	
 
 .popover h2 {
 	font-size: 16px;
 	padding-left: 30px;
 	margin: 0px;
+	margin-top: 20px;
 }
 
-h3 {
+.filters h3{
 	font-weight: 600;
 	margin-top: 12px;
 	margin-bottom: 5px;	
 	padding-left: 45px;
 }
 
-h4 {
+.filters h4{
 	font-size: 14px;
 	font-weight: 400;
 	margin-top: 5px;

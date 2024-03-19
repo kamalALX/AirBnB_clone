@@ -93,15 +93,26 @@
 {
     text-align: left;
 }
+
+.amenities .your-custom-class
+{
+	display: contents;
+}
 .amenities li
 {
     display: flex;
     align-items: center;
+		margin-bottom: 10px;
 }
 
 .wrapper .amenities h2
 {
+		margin-bottom: 15px;
+		border-bottom: 1px solid #DDDDDD;
     text-align: left;
+		font-size: 16px;
+		margin-top: 40px;
+		padding-bottom: 5px;
 }
 .places .amenities  li .pet-friendly{
     content: url(../images/icon_pets.png);
@@ -115,7 +126,6 @@
     width: 29px;
     height: auto;
     margin-right: 15px;
-    margin-top: 10px;
 }
 
 .wifi{
@@ -123,5 +133,33 @@
     width: 29px;
     height: auto;
     margin-right: 15px;
-    margin-top: 10px;
+}
+
+.reviews
+{
+	text-align: left;
+}
+.reviews h2
+{
+	font-size: 16px;
+	border-bottom: solid #DDDDDD 1px;
+	padding-bottom: 5px;
+	padding-top: 40px;
+}
+.reviews h3
+{
+	font-size: 14px;
+}
+.reviews p
+{
+	font-size: 12px;
+}
+.reviews li
+{
+	list-style: none;
+	text-align: left;
+}
+.reviews ul
+{
+	display: contents;
 }
